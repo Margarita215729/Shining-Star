@@ -1,0 +1,152 @@
+<!-- Portfolio Header -->
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-title"><%= __('portfolio.title') %></h1>
+        <p class="page-subtitle"><%= __('portfolio.subtitle') %></p>
+    </div>
+</section>
+
+<!-- Portfolio Gallery -->
+<section class="portfolio-gallery">
+    <div class="container">
+        <% if (portfolio.length === 0) { %>
+        <div class="empty-portfolio">
+            <div class="empty-icon">
+                <i class="fas fa-images"></i>
+            </div>
+            <h3>No Portfolio Items Yet</h3>
+            <p>Check back soon to see examples of our amazing cleaning transformations!</p>
+        </div>
+        <% } else { %>
+        <div class="portfolio-grid">
+            <% portfolio.forEach(item => { %>
+            <div class="portfolio-item">
+                <div class="portfolio-header">
+                    <h3 class="portfolio-title"><%= item.title[locale] %></h3>
+                    <p class="portfolio-description"><%= item.description[locale] %></p>
+                </div>
+                <div class="portfolio-images">
+                    <div class="before-after">
+                        <div class="image-container">
+                            <div class="image-label"><%= __('portfolio.before') %></div>
+                            <img src="<%= item.before %>" alt="Before cleaning" class="portfolio-image">
+                        </div>
+                        <div class="image-container">
+                            <div class="image-label"><%= __('portfolio.after') %></div>
+                            <img src="<%= item.after %>" alt="After cleaning" class="portfolio-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-date">
+                    <i class="fas fa-calendar"></i>
+                    <span><%= new Date(item.created).toLocaleDateString(locale) %></span>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+        <% } %>
+    </div>
+</section>
+
+<!-- Sample Portfolio (for demonstration when no real portfolio exists) -->
+<% if (portfolio.length === 0) { %>
+<section class="sample-portfolio">
+    <div class="container">
+        <h2 class="section-title">Sample Transformations</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item sample">
+                <div class="portfolio-header">
+                    <h3 class="portfolio-title">Kitchen Deep Clean</h3>
+                    <p class="portfolio-description">Complete kitchen transformation including appliances, counters, and floors.</p>
+                </div>
+                <div class="portfolio-images">
+                    <div class="before-after">
+                        <div class="image-container">
+                            <div class="image-label"><%= __('portfolio.before') %></div>
+                            <div class="sample-image">
+                                <i class="fas fa-utensils"></i>
+                                <p>Before: Dirty Kitchen</p>
+                            </div>
+                        </div>
+                        <div class="image-container">
+                            <div class="image-label"><%= __('portfolio.after') %></div>
+                            <div class="sample-image clean">
+                                <i class="fas fa-sparkles"></i>
+                                <p>After: Sparkling Clean</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item sample">
+                <div class="portfolio-header">
+                    <h3 class="portfolio-title">Bathroom Renovation Clean</h3>
+                    <p class="portfolio-description">Post-renovation deep cleaning with sanitization and stain removal.</p>
+                </div>
+                <div class="portfolio-images">
+                    <div class="before-after">
+                        <div class="image-container">
+                            <div class="image-label"><%= __('portfolio.before') %></div>
+                            <div class="sample-image">
+                                <i class="fas fa-bath"></i>
+                                <p>Before: Messy Bathroom</p>
+                            </div>
+                        </div>
+                        <div class="image-container">
+                            <div class="image-label"><%= __('portfolio.after') %></div>
+                            <div class="sample-image clean">
+                                <i class="fas fa-sparkles"></i>
+                                <p>After: Pristine Bathroom</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item sample">
+                <div class="portfolio-header">
+                    <h3 class="portfolio-title">Office Space Cleaning</h3>
+                    <p class="portfolio-description">Professional office cleaning including windows, floors, and workstations.</p>
+                </div>
+                <div class="portfolio-images">
+                    <div class="before-after">
+                        <div class="image-container">
+                            <div class="image-label"><%= __('portfolio.before') %></div>
+                            <div class="sample-image">
+                                <i class="fas fa-building"></i>
+                                <p>Before: Cluttered Office</p>
+                            </div>
+                        </div>
+                        <div class="image-container">
+                            <div class="image-label"><%= __('portfolio.after') %></div>
+                            <div class="sample-image clean">
+                                <i class="fas fa-sparkles"></i>
+                                <p>After: Professional Space</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<% } %>
+
+<!-- CTA Section -->
+<section class="cta">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Ready for Your Transformation?</h2>
+            <p class="cta-text">Let us create amazing before and after results for your space too!</p>
+            <div class="cta-actions">
+                <a href="/services" class="btn btn-primary">
+                    Book Service
+                </a>
+                <a href="/contact" class="btn btn-outline">
+                    <%= __('nav.contact') %>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

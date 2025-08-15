@@ -1,0 +1,83 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "contact": "Contact",
+    "admin": "Admin"
+  },
+  "home": {
+    "title": "Shining Star Cleaning Services",
+    "subtitle": "Professional cleaning services you can trust",
+    "hero_text": "Transform your space with our expert cleaning services. We make your home and office shine like never before.",
+    "cta_button": "Get Quote",
+    "features_title": "Why Choose Us?",
+    "feature_1": "Professional & Reliable",
+    "feature_2": "Eco-Friendly Products",
+    "feature_3": "Customizable Services",
+    "feature_4": "Affordable Pricing"
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Comprehensive cleaning solutions for every need",
+    "refrigerator": "Refrigerator Cleaning",
+    "windows": "Window Cleaning",
+    "bathroom": "Toilet/Bathroom Cleaning",
+    "mirrors": "Mirror Cleaning",
+    "floors": "Floor Cleaning",
+    "windowsills": "Windowsill Cleaning",
+    "carpet_stains": "Carpet Stain Removal",
+    "wall_stains": "Wall Stain Removal",
+    "custom_service": "Custom Service",
+    "select_services": "Select Your Services",
+    "get_quote": "Get Quote"
+  },
+  "portfolio": {
+    "title": "Our Work",
+    "subtitle": "See the transformation",
+    "before": "Before",
+    "after": "After",
+    "view_more": "View More"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch for a free quote",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "send": "Send Message",
+    "success": "Message sent successfully!",
+    "error": "Error sending message. Please try again."
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "login": "Login",
+    "logout": "Logout",
+    "username": "Username",
+    "password": "Password",
+    "dashboard": "Dashboard",
+    "manage_portfolio": "Manage Portfolio",
+    "manage_services": "Manage Services",
+    "manage_packages": "Manage Packages",
+    "upload_image": "Upload Image",
+    "add_service": "Add Service",
+    "edit_service": "Edit Service",
+    "delete_service": "Delete Service"
+  },
+  "common": {
+    "language": "Language",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "page_not_found": "Page Not Found",
+    "error": "Error",
+    "success": "Success"
+  }
+}

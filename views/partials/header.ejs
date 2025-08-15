@@ -1,0 +1,60 @@
+<header class="header">
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="/" class="logo">
+                    <i class="fas fa-star"></i>
+                    <span>Shining Star</span>
+                </a>
+            </div>
+            
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link <%= currentPage === 'home' ? 'active' : '' %>">
+                            <%= __('nav.home') %>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/services" class="nav-link <%= currentPage === 'services' ? 'active' : '' %>">
+                            <%= __('nav.services') %>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/portfolio" class="nav-link <%= currentPage === 'portfolio' ? 'active' : '' %>">
+                            <%= __('nav.portfolio') %>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/contact" class="nav-link <%= currentPage === 'contact' ? 'active' : '' %>">
+                            <%= __('nav.contact') %>
+                        </a>
+                    </li>
+                    <% if (user && user.role === 'admin') { %>
+                    <li class="nav-item">
+                        <a href="/admin" class="nav-link <%= currentPage.includes('admin') ? 'active' : '' %>">
+                            <%= __('nav.admin') %>
+                        </a>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+            
+            <div class="nav-actions">
+                <!-- Language Selector -->
+                <div class="language-selector">
+                    <select id="language-select" onchange="changeLanguage(this.value)">
+                        <option value="en" <%= locale === 'en' ? 'selected' : '' %>>English</option>
+                        <option value="ru" <%= locale === 'ru' ? 'selected' : '' %>>Русский</option>
+                        <option value="es" <%= locale === 'es' ? 'selected' : '' %>>Español</option>
+                    </select>
+                </div>
+                
+                <!-- Mobile menu toggle -->
+                <button class="nav-toggle" id="nav-toggle">
+                    <span class="nav-toggle-icon"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+</header>

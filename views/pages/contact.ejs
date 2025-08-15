@@ -1,0 +1,158 @@
+<!-- Contact Header -->
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-title"><%= __('contact.title') %></h1>
+        <p class="page-subtitle"><%= __('contact.subtitle') %></p>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section">
+    <div class="container">
+        <div class="contact-content">
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <h2 class="contact-info-title">Get in Touch</h2>
+                <p class="contact-info-text">
+                    Ready to transform your space? Contact us today for a free consultation and quote.
+                </p>
+                
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Phone</h3>
+                            <p>+1 (555) 123-4567</p>
+                            <span>Mon-Fri 8AM-6PM</span>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p>info@shiningstar.com</p>
+                            <span>We respond within 24 hours</span>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Address</h3>
+                            <p>123 Clean Street<br>City, State 12345</p>
+                            <span>Service area: 50 mile radius</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="business-hours">
+                    <h3>Business Hours</h3>
+                    <ul>
+                        <li><span>Monday - Friday:</span> 8:00 AM - 6:00 PM</li>
+                        <li><span>Saturday:</span> 9:00 AM - 4:00 PM</li>
+                        <li><span>Sunday:</span> Closed</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Contact Form -->
+            <div class="contact-form-container">
+                <h2 class="contact-form-title">Send us a Message</h2>
+                <form id="contact-form" class="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name"><%= __('contact.name') %> *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email"><%= __('contact.email') %> *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone"><%= __('contact.phone') %></label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject" name="subject">
+                            <option value="general">General Inquiry</option>
+                            <option value="quote">Request Quote</option>
+                            <option value="booking">Service Booking</option>
+                            <option value="support">Customer Support</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message"><%= __('contact.message') %> *</label>
+                        <textarea id="message" name="message" rows="6" required placeholder="Tell us about your cleaning needs..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            <%= __('contact.send') %>
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Form Messages -->
+                <div id="form-messages" class="form-messages" style="display: none;">
+                    <div id="success-message" class="message success">
+                        <i class="fas fa-check-circle"></i>
+                        <span><%= __('contact.success') %></span>
+                    </div>
+                    <div id="error-message" class="message error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span><%= __('contact.error') %></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Service Areas -->
+<section class="service-areas">
+    <div class="container">
+        <h2 class="section-title">Service Areas</h2>
+        <div class="areas-grid">
+            <div class="area-item">
+                <h3>Residential Cleaning</h3>
+                <ul>
+                    <li>Apartments & Condos</li>
+                    <li>Single Family Homes</li>
+                    <li>Townhouses</li>
+                    <li>Vacation Rentals</li>
+                </ul>
+            </div>
+            <div class="area-item">
+                <h3>Commercial Cleaning</h3>
+                <ul>
+                    <li>Offices & Coworking</li>
+                    <li>Retail Stores</li>
+                    <li>Restaurants</li>
+                    <li>Medical Facilities</li>
+                </ul>
+            </div>
+            <div class="area-item">
+                <h3>Specialized Services</h3>
+                <ul>
+                    <li>Post-Construction</li>
+                    <li>Move-in/Move-out</li>
+                    <li>Deep Cleaning</li>
+                    <li>Event Cleanup</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

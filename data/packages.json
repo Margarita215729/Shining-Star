@@ -1,0 +1,56 @@
+[
+  {
+    "id": "basic_package",
+    "name": {
+      "en": "Basic Cleaning Package",
+      "ru": "Базовый пакет уборки",
+      "es": "Paquete de Limpieza Básico"
+    },
+    "description": {
+      "en": "Essential cleaning services for small spaces",
+      "ru": "Основные услуги уборки для небольших помещений",
+      "es": "Servicios esenciales de limpieza para espacios pequeños"
+    },
+    "services": ["windows", "mirrors", "floors"],
+    "price": 40,
+    "discount": 10,
+    "duration": 60,
+    "available": true
+  },
+  {
+    "id": "premium_package",
+    "name": {
+      "en": "Premium Cleaning Package",
+      "ru": "Премиум пакет уборки",
+      "es": "Paquete de Limpieza Premium"
+    },
+    "description": {
+      "en": "Comprehensive cleaning solution for homes and offices",
+      "ru": "Комплексное решение для уборки домов и офисов",
+      "es": "Solución integral de limpieza para hogares y oficinas"
+    },
+    "services": ["refrigerator", "windows", "bathroom", "mirrors", "floors", "windowsills"],
+    "price": 120,
+    "discount": 20,
+    "duration": 150,
+    "available": true
+  },
+  {
+    "id": "deep_clean_package",
+    "name": {
+      "en": "Deep Clean Package",
+      "ru": "Пакет глубокой уборки",
+      "es": "Paquete de Limpieza Profunda"
+    },
+    "description": {
+      "en": "Complete deep cleaning with stain removal services",
+      "ru": "Полная глубокая уборка с услугами удаления пятен",
+      "es": "Limpieza profunda completa con servicios de eliminación de manchas"
+    },
+    "services": ["refrigerator", "windows", "bathroom", "mirrors", "floors", "windowsills", "carpet_stains", "wall_stains"],
+    "price": 180,
+    "discount": 25,
+    "duration": 210,
+    "available": true
+  }
+]

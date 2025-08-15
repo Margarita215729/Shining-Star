@@ -1,0 +1,47 @@
+<!-- Admin Login -->
+<section class="admin-login">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo">
+                    <i class="fas fa-star"></i>
+                    <span>Shining Star</span>
+                </div>
+                <h1 class="login-title"><%= __('admin.login') %></h1>
+                <p class="login-subtitle">Admin Dashboard Access</p>
+            </div>
+            
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="username"><%= __('admin.username') %></label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password"><%= __('admin.password') %></label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary login-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <%= __('admin.login') %>
+                </button>
+            </form>
+            
+            <div id="login-messages" class="form-messages" style="display: none;">
+                <div id="login-error" class="message error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Invalid credentials</span>
+                </div>
+            </div>
+            
+            <div class="login-footer">
+                <p>Default credentials: admin / admin123</p>
+                <a href="/" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Website
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
