@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const i18n = require('i18n');
 const path = require('path');
 
-// Fix for Vercel deployment
+// Fix for Vercel deployment - Updated config
 const publicPath = path.resolve(__dirname, 'public');
 const viewsPath = path.resolve(__dirname, 'views');
 const localesPath = path.resolve(__dirname, 'locales');
