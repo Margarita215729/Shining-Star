@@ -18,6 +18,7 @@
   "author": "Shining Star Cleaning Services",
   "license": "MIT",
   "dependencies": {
+    "express-ejs-layouts": "^2.5.1",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.10",

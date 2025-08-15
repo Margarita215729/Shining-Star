@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const i18n = require('i18n');
 const path = require('path');
+const expressLayouts = require('express-ejs-layouts');
 
 // Fix for Vercel deployment - Updated config
 const publicPath = path.resolve(__dirname, 'public');
@@ -70,6 +71,8 @@ app.use(i18n.init);
 // Set view engine
 app.set('view engine', 'ejs');
 app.set('views', viewsPath);
+app.use(expressLayouts);
+app.set('layout', 'layout');
 
 // Make i18n available in templates
 app.use((req, res, next) => {
