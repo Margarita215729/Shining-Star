@@ -1,0 +1,154 @@
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title"><%= __('home.title') %></h1>
+            <p class="hero-subtitle"><%= __('home.subtitle') %></p>
+            <p class="hero-text"><%= __('home.hero_text') %></p>
+            <div class="hero-actions">
+                <a href="/services" class="btn btn-primary">
+                    <%= __('home.cta_button') %>
+                </a>
+                <a href="/contact" class="btn btn-outline">
+                    <%= __('nav.contact') %>
+                </a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="/images/hero-cleaning.jpg" alt="Professional Cleaning Services" />
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+    <div class="container">
+        <h2 class="section-title"><%= __('home.features_title') %></h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <h3 class="feature-title"><%= __('home.feature_1') %></h3>
+                <p class="feature-description">
+                    Trained professionals with years of experience in cleaning services.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <h3 class="feature-title"><%= __('home.feature_2') %></h3>
+                <p class="feature-description">
+                    We use environmentally safe products that protect your family and pets.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3 class="feature-title"><%= __('home.feature_3') %></h3>
+                <p class="feature-description">
+                    Tailored cleaning solutions to meet your specific needs and preferences.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <h3 class="feature-title"><%= __('home.feature_4') %></h3>
+                <p class="feature-description">
+                    Competitive pricing with transparent quotes and no hidden fees.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Preview Section -->
+<section class="services-preview">
+    <div class="container">
+        <h2 class="section-title"><%= __('services.title') %></h2>
+        <div class="services-grid">
+            <% services.forEach(service => { %>
+            <div class="service-card">
+                <div class="service-icon">
+                    <% if (service.id === 'refrigerator') { %>
+                        <i class="fas fa-snowflake"></i>
+                    <% } else if (service.id === 'windows') { %>
+                        <i class="fas fa-window-maximize"></i>
+                    <% } else if (service.id === 'bathroom') { %>
+                        <i class="fas fa-bath"></i>
+                    <% } else if (service.id === 'mirrors') { %>
+                        <i class="fas fa-mirror"></i>
+                    <% } else { %>
+                        <i class="fas fa-broom"></i>
+                    <% } %>
+                </div>
+                <h3 class="service-title"><%= service.name[locale] %></h3>
+                <p class="service-description"><%= service.description[locale] %></p>
+                <div class="service-price">$<%= service.price %></div>
+                <div class="service-duration"><%= service.duration %> min</div>
+            </div>
+            <% }) %>
+        </div>
+        <div class="text-center">
+            <a href="/services" class="btn btn-primary">
+                View All Services
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Packages Section -->
+<section class="packages-preview">
+    <div class="container">
+        <h2 class="section-title">Service Packages</h2>
+        <div class="packages-grid">
+            <% packages.forEach(package => { %>
+            <div class="package-card">
+                <div class="package-header">
+                    <h3 class="package-title"><%= package.name[locale] %></h3>
+                    <p class="package-description"><%= package.description[locale] %></p>
+                </div>
+                <div class="package-price">
+                    <span class="price-original">$<%= package.price %></span>
+                    <span class="price-discounted">$<%= Math.round(package.price * (1 - package.discount / 100)) %></span>
+                    <span class="price-discount"><%= package.discount %>% OFF</span>
+                </div>
+                <ul class="package-features">
+                    <% package.services.forEach(serviceId => { %>
+                        <% const service = services.find(s => s.id === serviceId) || locals.allServices?.find(s => s.id === serviceId) %>
+                        <% if (service) { %>
+                        <li><i class="fas fa-check"></i> <%= service.name[locale] %></li>
+                        <% } %>
+                    <% }) %>
+                </ul>
+                <div class="package-duration">
+                    <i class="fas fa-clock"></i> <%= package.duration %> minutes
+                </div>
+                <a href="/services" class="btn btn-outline">Select Package</a>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Ready to Get Started?</h2>
+            <p class="cta-text">Contact us today for a free quote and let us transform your space!</p>
+            <div class="cta-actions">
+                <a href="/contact" class="btn btn-primary">
+                    <%= __('home.cta_button') %>
+                </a>
+                <div class="cta-contact">
+                    <i class="fas fa-phone"></i>
+                    <span>+1 (555) 123-4567</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

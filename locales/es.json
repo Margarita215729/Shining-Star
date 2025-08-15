@@ -1,0 +1,83 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "portfolio": "Portafolio",
+    "contact": "Contacto",
+    "admin": "Admin"
+  },
+  "home": {
+    "title": "Servicios de Limpieza Estrella Brillante",
+    "subtitle": "Servicios de limpieza profesional en los que puedes confiar",
+    "hero_text": "Transforma tu espacio con nuestros servicios de limpieza expertos. Hacemos que tu hogar y oficina brillen como nunca antes.",
+    "cta_button": "Obtener Cotización",
+    "features_title": "¿Por qué elegirnos?",
+    "feature_1": "Profesional y Confiable",
+    "feature_2": "Productos Ecológicos",
+    "feature_3": "Servicios Personalizables",
+    "feature_4": "Precios Asequibles"
+  },
+  "services": {
+    "title": "Nuestros Servicios",
+    "subtitle": "Soluciones integrales de limpieza para cada necesidad",
+    "refrigerator": "Limpieza de Refrigerador",
+    "windows": "Limpieza de Ventanas",
+    "bathroom": "Limpieza de Baño/Aseo",
+    "mirrors": "Limpieza de Espejos",
+    "floors": "Limpieza de Pisos",
+    "windowsills": "Limpieza de Alféizares",
+    "carpet_stains": "Eliminación de Manchas de Alfombras",
+    "wall_stains": "Eliminación de Manchas de Paredes",
+    "custom_service": "Servicio Personalizado",
+    "select_services": "Selecciona Tus Servicios",
+    "get_quote": "Obtener Cotización"
+  },
+  "portfolio": {
+    "title": "Nuestro Trabajo",
+    "subtitle": "Mira la transformación",
+    "before": "Antes",
+    "after": "Después",
+    "view_more": "Ver Más"
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "subtitle": "Ponte en contacto para una cotización gratuita",
+    "name": "Nombre",
+    "email": "Correo Electrónico",
+    "phone": "Teléfono",
+    "message": "Mensaje",
+    "send": "Enviar Mensaje",
+    "success": "¡Mensaje enviado exitosamente!",
+    "error": "Error al enviar mensaje. Por favor intenta de nuevo."
+  },
+  "admin": {
+    "title": "Panel de Administración",
+    "login": "Iniciar Sesión",
+    "logout": "Cerrar Sesión",
+    "username": "Nombre de Usuario",
+    "password": "Contraseña",
+    "dashboard": "Panel de Control",
+    "manage_portfolio": "Gestionar Portafolio",
+    "manage_services": "Gestionar Servicios",
+    "manage_packages": "Gestionar Paquetes",
+    "upload_image": "Subir Imagen",
+    "add_service": "Agregar Servicio",
+    "edit_service": "Editar Servicio",
+    "delete_service": "Eliminar Servicio"
+  },
+  "common": {
+    "language": "Idioma",
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Agregar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "page_not_found": "Página No Encontrada",
+    "error": "Error",
+    "success": "Éxito"
+  }
+}

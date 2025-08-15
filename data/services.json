@@ -1,0 +1,138 @@
+[
+  {
+    "id": "refrigerator",
+    "name": {
+      "en": "Refrigerator Cleaning",
+      "ru": "Чистка холодильника",
+      "es": "Limpieza de Refrigerador"
+    },
+    "description": {
+      "en": "Complete cleaning and sanitization of your refrigerator interior and exterior",
+      "ru": "Полная чистка и дезинфекция внутренней и внешней части холодильника",
+      "es": "Limpieza completa y desinfección del interior y exterior de su refrigerador"
+    },
+    "price": 25,
+    "duration": 30,
+    "category": "kitchen",
+    "available": true
+  },
+  {
+    "id": "windows",
+    "name": {
+      "en": "Window Cleaning",
+      "ru": "Мытье окон",
+      "es": "Limpieza de Ventanas"
+    },
+    "description": {
+      "en": "Professional window cleaning for crystal clear results",
+      "ru": "Профессиональное мытье окон для кристально чистого результата",
+      "es": "Limpieza profesional de ventanas para resultados cristalinos"
+    },
+    "price": 15,
+    "duration": 20,
+    "category": "general",
+    "available": true
+  },
+  {
+    "id": "bathroom",
+    "name": {
+      "en": "Toilet/Bathroom Cleaning",
+      "ru": "Уборка туалета/ванной",
+      "es": "Limpieza de Baño/Aseo"
+    },
+    "description": {
+      "en": "Deep cleaning and disinfection of bathroom facilities",
+      "ru": "Глубокая чистка и дезинфекция ванной комнаты",
+      "es": "Limpieza profunda y desinfección de instalaciones de baño"
+    },
+    "price": 35,
+    "duration": 45,
+    "category": "bathroom",
+    "available": true
+  },
+  {
+    "id": "mirrors",
+    "name": {
+      "en": "Mirror Cleaning",
+      "ru": "Чистка зеркал",
+      "es": "Limpieza de Espejos"
+    },
+    "description": {
+      "en": "Streak-free mirror cleaning for a perfect shine",
+      "ru": "Чистка зеркал без разводов для идеального блеска",
+      "es": "Limpieza de espejos sin rayas para un brillo perfecto"
+    },
+    "price": 10,
+    "duration": 15,
+    "category": "general",
+    "available": true
+  },
+  {
+    "id": "floors",
+    "name": {
+      "en": "Floor Cleaning",
+      "ru": "Мытье полов",
+      "es": "Limpieza de Pisos"
+    },
+    "description": {
+      "en": "Comprehensive floor cleaning for all surface types",
+      "ru": "Комплексная уборка полов для всех типов поверхностей",
+      "es": "Limpieza integral de pisos para todos los tipos de superficie"
+    },
+    "price": 20,
+    "duration": 30,
+    "category": "general",
+    "available": true
+  },
+  {
+    "id": "windowsills",
+    "name": {
+      "en": "Windowsill Cleaning",
+      "ru": "Чистка подоконников",
+      "es": "Limpieza de Alféizares"
+    },
+    "description": {
+      "en": "Detailed cleaning of windowsills and frames",
+      "ru": "Детальная чистка подоконников и рам",
+      "es": "Limpieza detallada de alféizares y marcos"
+    },
+    "price": 8,
+    "duration": 10,
+    "category": "general",
+    "available": true
+  },
+  {
+    "id": "carpet_stains",
+    "name": {
+      "en": "Carpet Stain Removal",
+      "ru": "Удаление пятен с ковров",
+      "es": "Eliminación de Manchas de Alfombras"
+    },
+    "description": {
+      "en": "Professional stain removal for carpets and rugs",
+      "ru": "Профессиональное удаление пятен с ковров и ковриков",
+      "es": "Eliminación profesional de manchas para alfombras y tapetes"
+    },
+    "price": 30,
+    "duration": 40,
+    "category": "specialized",
+    "available": true
+  },
+  {
+    "id": "wall_stains",
+    "name": {
+      "en": "Wall Stain Removal",
+      "ru": "Удаление пятен со стен",
+      "es": "Eliminación de Manchas de Paredes"
+    },
+    "description": {
+      "en": "Expert removal of stains and marks from walls",
+      "ru": "Экспертное удаление пятен и следов со стен",
+      "es": "Eliminación experta de manchas y marcas de las paredes"
+    },
+    "price": 25,
+    "duration": 35,
+    "category": "specialized",
+    "available": true
+  }
+]

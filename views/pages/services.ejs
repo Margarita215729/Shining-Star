@@ -1,0 +1,176 @@
+<!-- Services Header -->
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-title"><%= __('services.title') %></h1>
+        <p class="page-subtitle"><%= __('services.subtitle') %></p>
+    </div>
+</section>
+
+<!-- Service Selection -->
+<section class="service-selection">
+    <div class="container">
+        <div class="service-selector">
+            <h2 class="section-title"><%= __('services.select_services') %></h2>
+            
+            <!-- Individual Services -->
+            <div class="services-section">
+                <h3 class="subsection-title">Individual Services</h3>
+                <div class="services-grid">
+                    <% services.forEach(service => { %>
+                    <div class="service-card selectable" data-service-id="<%= service.id %>" data-price="<%= service.price %>" data-duration="<%= service.duration %>">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <% if (service.id === 'refrigerator') { %>
+                                    <i class="fas fa-snowflake"></i>
+                                <% } else if (service.id === 'windows') { %>
+                                    <i class="fas fa-window-maximize"></i>
+                                <% } else if (service.id === 'bathroom') { %>
+                                    <i class="fas fa-bath"></i>
+                                <% } else if (service.id === 'mirrors') { %>
+                                    <i class="fas fa-mirror"></i>
+                                <% } else if (service.id === 'floors') { %>
+                                    <i class="fas fa-home"></i>
+                                <% } else if (service.id === 'windowsills') { %>
+                                    <i class="fas fa-window-restore"></i>
+                                <% } else if (service.id === 'carpet_stains') { %>
+                                    <i class="fas fa-rug"></i>
+                                <% } else if (service.id === 'wall_stains') { %>
+                                    <i class="fas fa-paint-roller"></i>
+                                <% } else { %>
+                                    <i class="fas fa-broom"></i>
+                                <% } %>
+                            </div>
+                            <div class="service-checkbox">
+                                <input type="checkbox" id="service-<%= service.id %>" name="services[]" value="<%= service.id %>">
+                                <label for="service-<%= service.id %>"></label>
+                            </div>
+                        </div>
+                        <h3 class="service-title"><%= service.name[locale] %></h3>
+                        <p class="service-description"><%= service.description[locale] %></p>
+                        <div class="service-details">
+                            <div class="service-price">$<%= service.price %></div>
+                            <div class="service-duration"><%= service.duration %> min</div>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+            
+            <!-- Service Packages -->
+            <div class="packages-section">
+                <h3 class="subsection-title">Service Packages</h3>
+                <div class="packages-grid">
+                    <% packages.forEach(package => { %>
+                    <div class="package-card selectable" data-package-id="<%= package.id %>" data-price="<%= Math.round(package.price * (1 - package.discount / 100)) %>" data-duration="<%= package.duration %>">
+                        <div class="package-header">
+                            <div class="package-checkbox">
+                                <input type="checkbox" id="package-<%= package.id %>" name="packages[]" value="<%= package.id %>">
+                                <label for="package-<%= package.id %>"></label>
+                            </div>
+                            <h3 class="package-title"><%= package.name[locale] %></h3>
+                            <p class="package-description"><%= package.description[locale] %></p>
+                        </div>
+                        <div class="package-price">
+                            <span class="price-original">$<%= package.price %></span>
+                            <span class="price-discounted">$<%= Math.round(package.price * (1 - package.discount / 100)) %></span>
+                            <span class="price-discount"><%= package.discount %>% OFF</span>
+                        </div>
+                        <ul class="package-features">
+                            <% package.services.forEach(serviceId => { %>
+                                <% const service = services.find(s => s.id === serviceId) %>
+                                <% if (service) { %>
+                                <li><i class="fas fa-check"></i> <%= service.name[locale] %></li>
+                                <% } %>
+                            <% }) %>
+                        </ul>
+                        <div class="package-duration">
+                            <i class="fas fa-clock"></i> <%= package.duration %> minutes
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+            
+            <!-- Quote Summary -->
+            <div class="quote-summary">
+                <div class="quote-card">
+                    <h3 class="quote-title">Your Quote</h3>
+                    <div class="quote-details">
+                        <div class="quote-items" id="quote-items">
+                            <p class="no-selection">Select services to see your quote</p>
+                        </div>
+                        <div class="quote-total" id="quote-total" style="display: none;">
+                            <div class="total-duration">
+                                <span>Total Duration: </span>
+                                <span id="total-duration">0</span> minutes
+                            </div>
+                            <div class="total-price">
+                                <span>Total Price: </span>
+                                <span class="price-amount">$<span id="total-price">0</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="get-quote-btn" class="btn btn-primary" disabled>
+                        <%= __('services.get_quote') %>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quote Modal -->
+<div id="quote-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Request Service Quote</h2>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="quote-form">
+                <div class="form-group">
+                    <label for="quote-name"><%= __('contact.name') %></label>
+                    <input type="text" id="quote-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="quote-email"><%= __('contact.email') %></label>
+                    <input type="email" id="quote-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="quote-phone"><%= __('contact.phone') %></label>
+                    <input type="tel" id="quote-phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="quote-address">Address</label>
+                    <textarea id="quote-address" name="address" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="quote-date">Preferred Date</label>
+                    <input type="date" id="quote-date" name="preferredDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="quote-message"><%= __('contact.message') %></label>
+                    <textarea id="quote-message" name="message" rows="4"></textarea>
+                </div>
+                
+                <div class="quote-summary-modal">
+                    <h3>Selected Services</h3>
+                    <div id="modal-quote-items"></div>
+                    <div class="quote-total-modal">
+                        <div>Total Duration: <span id="modal-total-duration">0</span> minutes</div>
+                        <div>Total Price: $<span id="modal-total-price">0</span></div>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeQuoteModal()">
+                        <%= __('common.cancel') %>
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Submit Request
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,142 @@
+<!-- Admin Header -->
+<div class="admin-header">
+    <div class="admin-nav">
+        <div class="admin-brand">
+            <a href="/admin" class="logo">
+                <i class="fas fa-star"></i>
+                <span>Admin Dashboard</span>
+            </a>
+        </div>
+        <div class="admin-user">
+            <span>Welcome, <%= user.username %></span>
+            <form action="/admin/logout" method="POST" style="display: inline;">
+                <button type="submit" class="btn btn-outline btn-sm">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <%= __('admin.logout') %>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Admin Layout -->
+<div class="admin-layout">
+    <aside class="admin-sidebar">
+        <nav class="admin-menu">
+            <ul>
+                <li><a href="/admin"><i class="fas fa-tachometer-alt"></i> <%= __('admin.dashboard') %></a></li>
+                <li><a href="/admin/portfolio" class="active"><i class="fas fa-images"></i> <%= __('admin.manage_portfolio') %></a></li>
+                <li><a href="/admin/services"><i class="fas fa-broom"></i> <%= __('admin.manage_services') %></a></li>
+                <li><a href="/admin/packages"><i class="fas fa-box"></i> <%= __('admin.manage_packages') %></a></li>
+            </ul>
+        </nav>
+    </aside>
+    
+    <main class="admin-content">
+        <div class="admin-page-header">
+            <h1><%= __('admin.manage_portfolio') %></h1>
+            <button class="btn btn-primary" onclick="openAddPortfolioModal()">
+                <i class="fas fa-plus"></i>
+                Add Portfolio Item
+            </button>
+        </div>
+        
+        <!-- Portfolio List -->
+        <div class="portfolio-admin-grid">
+            <% if (portfolio.length === 0) { %>
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-images"></i>
+                </div>
+                <h3>No Portfolio Items</h3>
+                <p>Start by adding your first before/after transformation photos.</p>
+                <button class="btn btn-primary" onclick="openAddPortfolioModal()">
+                    Add First Item
+                </button>
+            </div>
+            <% } else { %>
+                <% portfolio.forEach(item => { %>
+                <div class="portfolio-admin-item">
+                    <div class="portfolio-images-admin">
+                        <div class="image-admin">
+                            <label>Before</label>
+                            <img src="<%= item.before %>" alt="Before">
+                        </div>
+                        <div class="image-admin">
+                            <label>After</label>
+                            <img src="<%= item.after %>" alt="After">
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3><%= item.title.en %></h3>
+                        <p><%= item.description.en %></p>
+                        <div class="portfolio-actions">
+                            <button class="btn btn-sm btn-outline" onclick="editPortfolioItem('<%= item.id %>')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deletePortfolioItem('<%= item.id %>')">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            <% } %>
+        </div>
+    </main>
+</div>
+
+<!-- Add Portfolio Modal -->
+<div id="add-portfolio-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add Portfolio Item</h2>
+            <button class="modal-close" onclick="closeAddPortfolioModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="add-portfolio-form" enctype="multipart/form-data">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Before Image</label>
+                        <input type="file" name="before" accept="image/*" required>
+                    </div>
+                    <div class="form-group">
+                        <label>After Image</label>
+                        <input type="file" name="after" accept="image/*" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Title (English)</label>
+                    <input type="text" id="title-en" required>
+                </div>
+                <div class="form-group">
+                    <label>Title (Russian)</label>
+                    <input type="text" id="title-ru" required>
+                </div>
+                <div class="form-group">
+                    <label>Title (Spanish)</label>
+                    <input type="text" id="title-es" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Description (English)</label>
+                    <textarea id="description-en" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Description (Russian)</label>
+                    <textarea id="description-ru" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Description (Spanish)</label>
+                    <textarea id="description-es" rows="3" required></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeAddPortfolioModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Portfolio Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

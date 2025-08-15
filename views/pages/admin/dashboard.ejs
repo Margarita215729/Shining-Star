@@ -1,0 +1,178 @@
+<!-- Admin Header -->
+<div class="admin-header">
+    <div class="admin-nav">
+        <div class="admin-brand">
+            <a href="/admin" class="logo">
+                <i class="fas fa-star"></i>
+                <span>Admin Dashboard</span>
+            </a>
+        </div>
+        <div class="admin-user">
+            <span>Welcome, <%= user.username %></span>
+            <form action="/admin/logout" method="POST" style="display: inline;">
+                <button type="submit" class="btn btn-outline btn-sm">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <%= __('admin.logout') %>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Admin Sidebar -->
+<div class="admin-layout">
+    <aside class="admin-sidebar">
+        <nav class="admin-menu">
+            <ul>
+                <li>
+                    <a href="/admin" class="<%= currentPage === 'dashboard' ? 'active' : '' %>">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <%= __('admin.dashboard') %>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/portfolio" class="<%= currentPage === 'portfolio' ? 'active' : '' %>">
+                        <i class="fas fa-images"></i>
+                        <%= __('admin.manage_portfolio') %>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/services" class="<%= currentPage === 'services' ? 'active' : '' %>">
+                        <i class="fas fa-broom"></i>
+                        <%= __('admin.manage_services') %>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/packages" class="<%= currentPage === 'packages' ? 'active' : '' %>">
+                        <i class="fas fa-box"></i>
+                        <%= __('admin.manage_packages') %>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    
+    <main class="admin-content">
+        <!-- Dashboard Stats -->
+        <div class="dashboard-header">
+            <h1 class="dashboard-title"><%= __('admin.dashboard') %></h1>
+            <p class="dashboard-subtitle">Overview of your cleaning services business</p>
+        </div>
+        
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-broom"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number"><%= stats.services %></h3>
+                    <p class="stat-label">Active Services</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-box"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number"><%= stats.packages %></h3>
+                    <p class="stat-label">Service Packages</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-images"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number"><%= stats.portfolio %></h3>
+                    <p class="stat-label">Portfolio Items</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number">4.9</h3>
+                    <p class="stat-label">Average Rating</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="dashboard-section">
+            <h2 class="section-title">Quick Actions</h2>
+            <div class="quick-actions">
+                <a href="/admin/portfolio" class="action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <h3>Add Portfolio Item</h3>
+                    <p>Upload before/after photos of your work</p>
+                </a>
+                
+                <a href="/admin/services" class="action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3>Manage Services</h3>
+                    <p>Edit service details and pricing</p>
+                </a>
+                
+                <a href="/admin/packages" class="action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3>Create Package</h3>
+                    <p>Bundle services with special discounts</p>
+                </a>
+                
+                <a href="/" class="action-card" target="_blank">
+                    <div class="action-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>View Website</h3>
+                    <p>See how your site looks to customers</p>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Recent Activity -->
+        <div class="dashboard-section">
+            <h2 class="section-title">Recent Activity</h2>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p class="activity-text">Portfolio section ready for uploads</p>
+                        <span class="activity-time">Just now</span>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-broom"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p class="activity-text">8 cleaning services configured</p>
+                        <span class="activity-time">Today</span>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p class="activity-text">Website launched with multi-language support</p>
+                        <span class="activity-time">Today</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
