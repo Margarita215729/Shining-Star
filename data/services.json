@@ -17,7 +17,8 @@
     "available": true,
     "calculationType": "quantity",
     "unit": "piece",
-    "maxQuantity": 5
+    "maxQuantity": 5,
+    "icon": "/images/icons/refrigerator-cleaning.svg"
   },
   {
     "id": "windows",
@@ -37,7 +38,8 @@
     "available": true,
     "calculationType": "quantity",
     "unit": "window",
-    "maxQuantity": 20
+    "maxQuantity": 20,
+    "icon": "/images/icons/window-cleaning.svg"
   },
   {
     "id": "bathroom",
