@@ -1,0 +1,252 @@
+<%- contentFor('title') %>
+    Pricing Calculator - Shining Star
+
+    <%- contentFor('meta') %>
+        <meta name="description"
+            content="Calculate precise pricing for professional cleaning services with our advanced calculator. Get instant quotes for quantity-based, area-based pricing with distance calculations.">
+        <meta name="keywords"
+            content="cleaning calculator, service pricing, professional cleaning quotes, Philadelphia cleaning services">
+
+        <%- contentFor('stylesheets') %>
+            <link rel="stylesheet" href="/css/calculator.css">
+
+            <%- contentFor('scripts') %>
+                <script src="/js/calculator.js"></script>
+
+                <div class="calculator-container">
+                    <div class="calculator-header">
+                        <h2>
+                            <%= __('calculator.title') %>
+                        </h2>
+                        <p>
+                            <%= __('calculator.subtitle') %>
+                        </p>
+                    </div>
+
+                    <form id="calculator-form" class="calculator-form">
+                        <div class="form-grid">
+                            <!-- Service Selection -->
+                            <div class="form-group full-width">
+                                <label for="service-select">
+                                    <%= __('calculator.selectService') %>
+                                </label>
+                                <select id="service-select" required>
+                                    <option value="">
+                                        <%= __('calculator.selectServicePlaceholder') %>
+                                    </option>
+                                </select>
+                            </div>
+
+                            <!-- Customer Information -->
+                            <div class="form-group">
+                                <label for="customer-name">
+                                    <%= __('calculator.customerName') %>
+                                </label>
+                                <input type="text" id="customer-name"
+                                    placeholder="<%= __('calculator.customerNamePlaceholder') %>" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="customer-phone">
+                                    <%= __('calculator.customerPhone') %>
+                                </label>
+                                <input type="tel" id="customer-phone"
+                                    placeholder="<%= __('calculator.customerPhonePlaceholder') %>" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="customer-email">
+                                    <%= __('calculator.customerEmail') %>
+                                </label>
+                                <input type="email" id="customer-email"
+                                    placeholder="<%= __('calculator.customerEmailPlaceholder') %>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="customer-address">
+                                    <%= __('calculator.customerAddress') %>
+                                </label>
+                                <input type="text" id="customer-address"
+                                    placeholder="<%= __('calculator.customerAddressPlaceholder') %>" required>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Quantity/Area Inputs -->
+                        <div id="quantity-container" style="display: none;">
+                            <!-- Dynamically populated based on service selection -->
+                        </div>
+
+                        <!-- Distance Information -->
+                        <div class="distance-info">
+                            <span class="distance-label">
+                                <%= __('calculator.distanceFromBase') %>
+                            </span>
+                            <span class="distance-value" id="calculated-distance">--</span>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <button type="button" id="calculate-btn" class="calculate-btn">
+                                <span>
+                                    <%= __('calculator.calculateQuote') %>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Quote Results -->
+                    <div id="quote-results" style="display: none;">
+                        <!-- Dynamically populated with quote details -->
+                    </div>
+                </div>
+
+                <!-- Additional Information Section -->
+                <div class="calculator-info">
+                    <div class="container">
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <div class="info-icon">📍</div>
+                                <h3>
+                                    <%= __('calculator.serviceArea') %>
+                                </h3>
+                                <p>
+                                    <%= __('calculator.serviceAreaDescription') %>
+                                </p>
+                                <ul>
+                                    <li>
+                                        <%= __('calculator.freeDistanceInfo') %>
+                                    </li>
+                                    <li>
+                                        <%= __('calculator.distanceChargingInfo') %>
+                                    </li>
+                                    <li>
+                                        <%= __('calculator.fuelCalculationInfo') %>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="info-card">
+                                <div class="info-icon">💰</div>
+                                <h3>
+                                    <%= __('calculator.pricingStructure') %>
+                                </h3>
+                                <p>
+                                    <%= __('calculator.pricingDescription') %>
+                                </p>
+                                <ul>
+                                    <li>
+                                        <%= __('calculator.quantityPricing') %>
+                                    </li>
+                                    <li>
+                                        <%= __('calculator.areaPricing') %>
+                                    </li>
+                                    <li>
+                                        <%= __('calculator.timePricing') %>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="info-card">
+                                <div class="info-icon">🔍</div>
+                                <h3>
+                                    <%= __('calculator.accurateQuotes') %>
+                                </h3>
+                                <p>
+                                    <%= __('calculator.accuracyDescription') %>
+                                </p>
+                                <ul>
+                                    <li>
+                                        <%= __('calculator.realtimeCalculation') %>
+                                    </li>
+                                    <li>
+                                        <%= __('calculator.transparentPricing') %>
+                                    </li>
+                                    <li>
+                                        <%= __('calculator.noHiddenFees') %>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Styles for Info Section -->
+                <style>
+                    .calculator-info {
+                        margin: 4rem 0;
+                        padding: 3rem 0;
+                        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+                    }
+
+                    .info-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                        gap: 2rem;
+                        max-width: 1200px;
+                        margin: 0 auto;
+                        padding: 0 2rem;
+                    }
+
+                    .info-card {
+                        background: white;
+                        padding: 2rem;
+                        border-radius: 15px;
+                        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                        text-align: center;
+                        transition: transform 0.3s ease;
+                    }
+
+                    .info-card:hover {
+                        transform: translateY(-5px);
+                    }
+
+                    .info-icon {
+                        font-size: 3rem;
+                        margin-bottom: 1rem;
+                    }
+
+                    .info-card h3 {
+                        color: #2d3748;
+                        font-size: 1.5rem;
+                        font-weight: 700;
+                        margin-bottom: 1rem;
+                    }
+
+                    .info-card p {
+                        color: #718096;
+                        margin-bottom: 1.5rem;
+                        line-height: 1.6;
+                    }
+
+                    .info-card ul {
+                        list-style: none;
+                        padding: 0;
+                        text-align: left;
+                    }
+
+                    .info-card li {
+                        color: #4a5568;
+                        margin-bottom: 0.5rem;
+                        padding-left: 1.5rem;
+                        position: relative;
+                    }
+
+                    .info-card li::before {
+                        content: '✓';
+                        position: absolute;
+                        left: 0;
+                        color: #38a169;
+                        font-weight: bold;
+                    }
+
+                    @media (max-width: 768px) {
+                        .info-grid {
+                            grid-template-columns: 1fr;
+                            padding: 0 1rem;
+                        }
+
+                        .calculator-info {
+                            margin: 2rem 0;
+                            padding: 2rem 0;
+                        }
+                    }
+                </style>

@@ -14,7 +14,10 @@
     "price": 25,
     "duration": 30,
     "category": "kitchen",
-    "available": true
+    "available": true,
+    "calculationType": "quantity",
+    "unit": "piece",
+    "maxQuantity": 5
   },
   {
     "id": "windows",
@@ -31,7 +34,10 @@
     "price": 15,
     "duration": 20,
     "category": "general",
-    "available": true
+    "available": true,
+    "calculationType": "quantity",
+    "unit": "window",
+    "maxQuantity": 20
   },
   {
     "id": "bathroom",
@@ -48,7 +54,10 @@
     "price": 35,
     "duration": 45,
     "category": "bathroom",
-    "available": true
+    "available": true,
+    "calculationType": "quantity",
+    "unit": "bathroom",
+    "maxQuantity": 5
   },
   {
     "id": "mirrors",
@@ -65,7 +74,10 @@
     "price": 10,
     "duration": 15,
     "category": "general",
-    "available": true
+    "available": true,
+    "calculationType": "quantity",
+    "unit": "mirror",
+    "maxQuantity": 15
   },
   {
     "id": "floors",
@@ -79,10 +91,14 @@
       "ru": "Комплексная уборка полов для всех типов поверхностей",
       "es": "Limpieza integral de pisos para todos los tipos de superficie"
     },
-    "price": 20,
-    "duration": 30,
+    "price": 2.5,
+    "duration": 5,
     "category": "general",
-    "available": true
+    "available": true,
+    "calculationType": "area",
+    "unit": "sqft",
+    "minArea": 50,
+    "maxArea": 5000
   },
   {
     "id": "windowsills",
@@ -99,7 +115,10 @@
     "price": 8,
     "duration": 10,
     "category": "general",
-    "available": true
+    "available": true,
+    "calculationType": "quantity",
+    "unit": "windowsill",
+    "maxQuantity": 25
   },
   {
     "id": "carpet_stains",
@@ -113,10 +132,14 @@
       "ru": "Профессиональное удаление пятен с ковров и ковриков",
       "es": "Eliminación profesional de manchas para alfombras y tapetes"
     },
-    "price": 30,
-    "duration": 40,
+    "price": 3,
+    "duration": 8,
     "category": "specialized",
-    "available": true
+    "available": true,
+    "calculationType": "area",
+    "unit": "sqft",
+    "minArea": 10,
+    "maxArea": 1000
   },
   {
     "id": "wall_stains",
@@ -130,9 +153,13 @@
       "ru": "Экспертное удаление пятен и следов со стен",
       "es": "Eliminación experta de manchas y marcas de las paredes"
     },
-    "price": 25,
-    "duration": 35,
+    "price": 2,
+    "duration": 6,
     "category": "specialized",
-    "available": true
+    "available": true,
+    "calculationType": "area",
+    "unit": "sqft",
+    "minArea": 5,
+    "maxArea": 500
   }
 ]

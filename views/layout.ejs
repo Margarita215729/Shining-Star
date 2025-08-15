@@ -11,12 +11,16 @@
     <!-- CSS -->
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/responsive.css">
+    <% if (currentPage==='calculator' ) { %>
+        <link rel="stylesheet" href="/css/calculator.css">
+        <% } %>
 
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+            <!-- Font Awesome for icons -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+            <!-- Google Fonts -->
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+                rel="stylesheet">
 </head>
 
 <body>
@@ -41,9 +45,12 @@
             <% if (currentPage==='services' ) { %>
                 <script src="/js/services.js"></script>
                 <% } %>
-                    <% if (currentPage.includes('admin')) { %>
-                        <script src="/js/admin.js"></script>
+                    <% if (currentPage==='calculator' ) { %>
+                        <script src="/js/calculator.js"></script>
                         <% } %>
+                            <% if (currentPage.includes('admin')) { %>
+                                <script src="/js/admin.js"></script>
+                                <% } %>
 </body>
 
 </html>

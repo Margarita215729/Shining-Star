@@ -1,0 +1,503 @@
+<%- contentFor('title') %>
+    Payment - Shining Star
+
+    <%- contentFor('meta') %>
+        <meta name="description"
+            content="Secure payment processing for professional cleaning services. Complete your booking with our encrypted payment system.">
+
+        <%- contentFor('stylesheets') %>
+            <link rel="stylesheet" href="/css/payment.css">
+
+            <div class="payment-container">
+                <div class="payment-header">
+                    <h1>
+                        <%= __('payment.title') %>
+                    </h1>
+                    <p>
+                        <%= __('payment.subtitle') %>
+                    </p>
+                </div>
+
+                <div class="payment-content">
+                    <div class="payment-summary">
+                        <h2>
+                            <%= __('payment.orderSummary') %>
+                        </h2>
+                        <div id="order-details">
+                            <!-- Order details will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="payment-form-container">
+                        <form id="payment-form" class="payment-form">
+                            <div class="payment-section">
+                                <h3>
+                                    <%= __('payment.customerInfo') %>
+                                </h3>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="customer-name">
+                                            <%= __('payment.fullName') %>
+                                        </label>
+                                        <input type="text" id="customer-name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="customer-email">
+                                            <%= __('payment.email') %>
+                                        </label>
+                                        <input type="email" id="customer-email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="customer-phone">
+                                            <%= __('payment.phone') %>
+                                        </label>
+                                        <input type="tel" id="customer-phone" required>
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label for="customer-address">
+                                            <%= __('payment.address') %>
+                                        </label>
+                                        <input type="text" id="customer-address" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="payment-section">
+                                <h3>
+                                    <%= __('payment.paymentMethod') %>
+                                </h3>
+
+                                <!-- Payment Method Selection -->
+                                <div class="payment-methods">
+                                    <div class="payment-method active" data-method="card">
+                                        <i class="fas fa-credit-card"></i>
+                                        <span>
+                                            <%= __('payment.creditCard') %>
+                                        </span>
+                                    </div>
+                                    <div class="payment-method" data-method="paypal">
+                                        <i class="fab fa-paypal"></i>
+                                        <span>PayPal</span>
+                                    </div>
+                                    <div class="payment-method" data-method="apple-pay">
+                                        <i class="fab fa-apple-pay"></i>
+                                        <span>Apple Pay</span>
+                                    </div>
+                                </div>
+
+                                <!-- Credit Card Form -->
+                                <div id="card-payment" class="payment-method-form active">
+                                    <div class="form-grid">
+                                        <div class="form-group full-width">
+                                            <label for="card-number">
+                                                <%= __('payment.cardNumber') %>
+                                            </label>
+                                            <input type="text" id="card-number" placeholder="1234 5678 9012 3456"
+                                                maxlength="19">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="card-expiry">
+                                                <%= __('payment.expiryDate') %>
+                                            </label>
+                                            <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="card-cvc">
+                                                <%= __('payment.cvv') %>
+                                            </label>
+                                            <input type="text" id="card-cvc" placeholder="123" maxlength="4">
+                                        </div>
+                                        <div class="form-group full-width">
+                                            <label for="card-name">
+                                                <%= __('payment.nameOnCard') %>
+                                            </label>
+                                            <input type="text" id="card-name"
+                                                placeholder="<%= __('payment.nameOnCardPlaceholder') %>">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PayPal Form -->
+                                <div id="paypal-payment" class="payment-method-form">
+                                    <div class="paypal-info">
+                                        <p>
+                                            <%= __('payment.paypalRedirect') %>
+                                        </p>
+                                        <div class="paypal-button-container">
+                                            <!-- PayPal button will be rendered here -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Apple Pay Form -->
+                                <div id="apple-pay-payment" class="payment-method-form">
+                                    <div class="apple-pay-info">
+                                        <p>
+                                            <%= __('payment.applePayInfo') %>
+                                        </p>
+                                        <button type="button" class="apple-pay-button">
+                                            <i class="fab fa-apple-pay"></i>
+                                            <%= __('payment.payWithApplePay') %>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="payment-section">
+                                <h3>
+                                    <%= __('payment.billingAddress') %>
+                                </h3>
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" id="same-as-service" checked>
+                                        <%= __('payment.sameAsServiceAddress') %>
+                                    </label>
+                                </div>
+
+                                <div id="billing-address-form" style="display: none;">
+                                    <div class="form-grid">
+                                        <div class="form-group full-width">
+                                            <label for="billing-address">
+                                                <%= __('payment.billingAddress') %>
+                                            </label>
+                                            <input type="text" id="billing-address">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="billing-city">
+                                                <%= __('payment.city') %>
+                                            </label>
+                                            <input type="text" id="billing-city">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="billing-state">
+                                                <%= __('payment.state') %>
+                                            </label>
+                                            <input type="text" id="billing-state">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="billing-zip">
+                                                <%= __('payment.zipCode') %>
+                                            </label>
+                                            <input type="text" id="billing-zip">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="payment-actions">
+                                <button type="button" class="btn btn-secondary" onclick="history.back()">
+                                    <%= __('payment.back') %>
+                                </button>
+                                <button type="submit" id="pay-button" class="btn btn-primary">
+                                    <span id="pay-button-text">
+                                        <%= __('payment.payNow') %>
+                                    </span>
+                                    <span id="pay-button-amount"></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Success Modal -->
+            <div id="payment-success-modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2>
+                        <%= __('payment.paymentSuccessful') %>
+                    </h2>
+                    <p>
+                        <%= __('payment.confirmationMessage') %>
+                    </p>
+                    <div class="booking-details" id="booking-details">
+                        <!-- Booking details will be populated -->
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-secondary" onclick="downloadInvoice()">
+                            <i class="fas fa-download"></i>
+                            <%= __('payment.downloadInvoice') %>
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="location.href='/'">
+                            <%= __('payment.backToHome') %>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading Overlay -->
+            <div id="payment-loading" class="loading-overlay" style="display: none;">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>
+                        <%= __('payment.processing') %>
+                    </p>
+                </div>
+            </div>
+
+            <%- contentFor('scripts') %>
+                <script src="/js/payment.js"></script>
+
+                <style>
+                    /* Payment specific styles */
+                    .payment-container {
+                        max-width: 1200px;
+                        margin: 2rem auto;
+                        padding: 2rem;
+                        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+                        border-radius: 20px;
+                    }
+
+                    .payment-header {
+                        text-align: center;
+                        margin-bottom: 3rem;
+                    }
+
+                    .payment-header h1 {
+                        color: #2d3748;
+                        font-size: 2.5rem;
+                        margin-bottom: 0.5rem;
+                    }
+
+                    .payment-content {
+                        display: grid;
+                        grid-template-columns: 1fr 1.5fr;
+                        gap: 3rem;
+                        align-items: start;
+                    }
+
+                    .payment-summary {
+                        background: white;
+                        padding: 2rem;
+                        border-radius: 15px;
+                        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                        position: sticky;
+                        top: 2rem;
+                    }
+
+                    .payment-summary h2 {
+                        color: #667eea;
+                        margin-bottom: 1.5rem;
+                        border-bottom: 2px solid #edf2f7;
+                        padding-bottom: 1rem;
+                    }
+
+                    .payment-form-container {
+                        background: white;
+                        padding: 2.5rem;
+                        border-radius: 15px;
+                        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                    }
+
+                    .payment-section {
+                        margin-bottom: 2.5rem;
+                        padding-bottom: 2rem;
+                        border-bottom: 1px solid #edf2f7;
+                    }
+
+                    .payment-section:last-child {
+                        border-bottom: none;
+                        margin-bottom: 0;
+                    }
+
+                    .payment-section h3 {
+                        color: #2d3748;
+                        margin-bottom: 1.5rem;
+                        font-size: 1.3rem;
+                    }
+
+                    .form-grid {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 1rem;
+                    }
+
+                    .form-group {
+                        display: flex;
+                        flex-direction: column;
+                    }
+
+                    .form-group.full-width {
+                        grid-column: 1 / -1;
+                    }
+
+                    .form-group label {
+                        font-weight: 600;
+                        color: #4a5568;
+                        margin-bottom: 0.5rem;
+                    }
+
+                    .form-group input {
+                        padding: 0.75rem;
+                        border: 2px solid #e2e8f0;
+                        border-radius: 8px;
+                        font-size: 1rem;
+                        transition: border-color 0.3s ease;
+                    }
+
+                    .form-group input:focus {
+                        outline: none;
+                        border-color: #667eea;
+                        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+                    }
+
+                    .payment-methods {
+                        display: flex;
+                        gap: 1rem;
+                        margin-bottom: 2rem;
+                    }
+
+                    .payment-method {
+                        flex: 1;
+                        padding: 1rem;
+                        border: 2px solid #e2e8f0;
+                        border-radius: 10px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    }
+
+                    .payment-method:hover {
+                        border-color: #667eea;
+                        background: #f7fafc;
+                    }
+
+                    .payment-method.active {
+                        border-color: #667eea;
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        color: white;
+                    }
+
+                    .payment-method i {
+                        font-size: 1.5rem;
+                        margin-bottom: 0.5rem;
+                        display: block;
+                    }
+
+                    .payment-method-form {
+                        display: none;
+                    }
+
+                    .payment-method-form.active {
+                        display: block;
+                    }
+
+                    .payment-actions {
+                        display: flex;
+                        gap: 1rem;
+                        justify-content: space-between;
+                        margin-top: 2rem;
+                    }
+
+                    .btn {
+                        padding: 1rem 2rem;
+                        border-radius: 10px;
+                        font-weight: 600;
+                        text-decoration: none;
+                        border: none;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        font-size: 1rem;
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                    }
+
+                    .btn-primary {
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        color: white;
+                        flex: 1;
+                        justify-content: center;
+                    }
+
+                    .btn-primary:hover {
+                        transform: translateY(-2px);
+                        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+                    }
+
+                    .btn-secondary {
+                        background: #f7fafc;
+                        color: #4a5568;
+                        border: 2px solid #e2e8f0;
+                    }
+
+                    .btn-secondary:hover {
+                        background: #edf2f7;
+                    }
+
+                    .modal {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.5);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 1000;
+                    }
+
+                    .modal-content {
+                        background: white;
+                        padding: 3rem;
+                        border-radius: 20px;
+                        text-align: center;
+                        max-width: 500px;
+                        width: 90%;
+                    }
+
+                    .success-icon {
+                        font-size: 4rem;
+                        color: #38a169;
+                        margin-bottom: 1rem;
+                    }
+
+                    .loading-overlay {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(255, 255, 255, 0.9);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 2000;
+                    }
+
+                    .loading-spinner {
+                        text-align: center;
+                    }
+
+                    .loading-spinner i {
+                        font-size: 3rem;
+                        color: #667eea;
+                        margin-bottom: 1rem;
+                    }
+
+                    @media (max-width: 768px) {
+                        .payment-content {
+                            grid-template-columns: 1fr;
+                            gap: 2rem;
+                        }
+
+                        .payment-summary {
+                            position: static;
+                        }
+
+                        .form-grid {
+                            grid-template-columns: 1fr;
+                        }
+
+                        .payment-methods {
+                            flex-direction: column;
+                        }
+
+                        .payment-actions {
+                            flex-direction: column;
+                        }
+                    }
+                </style>

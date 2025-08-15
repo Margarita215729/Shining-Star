@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
   try {
     const services = await readJSONFile('services.json');
     const packages = await readJSONFile('packages.json');
-    
+
     res.render('pages/home', {
       title: res.__('home.title'),
       currentPage: 'home',
@@ -39,7 +39,7 @@ router.get('/', async (req, res) => {
     });
   } catch (error) {
     console.error('Error loading home page:', error);
-    res.status(500).render('pages/error', { 
+    res.status(500).render('pages/error', {
       title: 'Error',
       currentPage: 'error',
       error: 'Failed to load page'
@@ -52,7 +52,7 @@ router.get('/services', async (req, res) => {
   try {
     const services = await readJSONFile('services.json');
     const packages = await readJSONFile('packages.json');
-    
+
     res.render('pages/services', {
       title: res.__('services.title'),
       currentPage: 'services',
@@ -61,7 +61,7 @@ router.get('/services', async (req, res) => {
     });
   } catch (error) {
     console.error('Error loading services page:', error);
-    res.status(500).render('pages/error', { 
+    res.status(500).render('pages/error', {
       title: 'Error',
       currentPage: 'error',
       error: 'Failed to load services'
@@ -73,7 +73,7 @@ router.get('/services', async (req, res) => {
 router.get('/portfolio', async (req, res) => {
   try {
     const portfolio = await readJSONFile('portfolio.json');
-    
+
     res.render('pages/portfolio', {
       title: res.__('portfolio.title'),
       currentPage: 'portfolio',
@@ -81,12 +81,40 @@ router.get('/portfolio', async (req, res) => {
     });
   } catch (error) {
     console.error('Error loading portfolio page:', error);
-    res.status(500).render('pages/error', { 
+    res.status(500).render('pages/error', {
       title: 'Error',
       currentPage: 'error',
       error: 'Failed to load portfolio'
     });
   }
+});
+
+// Calculator page
+router.get('/calculator', async (req, res) => {
+  try {
+    const services = await readJSONFile('services.json');
+
+    res.render('calculator', {
+      title: res.__('calculator.title'),
+      currentPage: 'calculator',
+      services
+    });
+  } catch (error) {
+    console.error('Error loading calculator page:', error);
+    res.status(500).render('pages/error', {
+      title: 'Error',
+      currentPage: 'error',
+      error: 'Failed to load calculator'
+    });
+  }
+});
+
+// Payment page
+router.get('/payment', (req, res) => {
+  res.render('payment', {
+    title: res.__('payment.title'),
+    currentPage: 'payment'
+  });
 });
 
 // Contact page
@@ -100,13 +128,13 @@ router.get('/contact', (req, res) => {
 // Contact form submission
 router.post('/contact', (req, res) => {
   const { name, email, phone, message } = req.body;
-  
+
   // In a real application, you would save this to a database or send an email
   console.log('Contact form submission:', { name, email, phone, message });
-  
-  res.json({ 
-    success: true, 
-    message: res.__('contact.success') 
+
+  res.json({
+    success: true,
+    message: res.__('contact.success')
   });
 });
 
