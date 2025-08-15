@@ -6,6 +6,11 @@ const helmet = require('helmet');
 const i18n = require('i18n');
 const path = require('path');
 
+// Fix for Vercel deployment
+const publicPath = path.resolve(__dirname, 'public');
+const viewsPath = path.resolve(__dirname, 'views');
+const localesPath = path.resolve(__dirname, 'locales');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -30,7 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Static files
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(publicPath));
 
 // Session configuration
 app.use(session({
@@ -46,7 +51,7 @@ app.use(session({
 // i18n configuration
 i18n.configure({
   locales: ['en', 'ru', 'es'],
-  directory: path.join(__dirname, 'locales'),
+  directory: localesPath,
   defaultLocale: 'en',
   cookie: 'lang',
   queryParameter: 'lang',
@@ -62,7 +67,7 @@ app.use(i18n.init);
 
 // Set view engine
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', viewsPath);
 
 // Make i18n available in templates
 app.use((req, res, next) => {
@@ -86,7 +91,7 @@ app.use((err, req, res, next) => {
 
 // 404 handler
 app.use((req, res) => {
-  res.status(404).render('pages/404', { 
+  res.status(404).render('pages/404', {
     title: res.__('Page Not Found'),
     currentPage: '404'
   });
