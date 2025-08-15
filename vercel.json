@@ -8,13 +8,10 @@
                 "includeFiles": [
                     "views/**",
                     "locales/**",
-                    "data/**"
+                    "data/**",
+                    "public/**"
                 ]
             }
-        },
-        {
-            "src": "public/**",
-            "use": "@vercel/static"
         }
     ],
     "routes": [
@@ -31,8 +28,15 @@
             "dest": "/public/images/$1"
         },
         {
+            "src": "/uploads/(.*)",
+            "dest": "/public/uploads/$1"
+        },
+        {
             "src": "/(.*)",
             "dest": "/server.js"
         }
-    ]
+    ],
+    "env": {
+        "NODE_ENV": "production"
+    }
 }

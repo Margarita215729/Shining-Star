@@ -41,12 +41,13 @@ app.use(express.static(publicPath));
 
 // Session configuration
 app.use(session({
-  secret: 'shining-star-cleaning-secret-key',
+  secret: process.env.SESSION_SECRET || 'shining-star-cleaning-secret-key',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false, // Set to true in production with HTTPS
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    secure: process.env.NODE_ENV === 'production', // Enable secure cookies in production
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    httpOnly: true // Prevent XSS attacks
   }
 }));
 

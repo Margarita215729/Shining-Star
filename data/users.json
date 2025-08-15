@@ -1,7 +1,7 @@
 [
   {
     "username": "admin",
-    "password": "$2a$10$8K1p/a0dclxKoNqzqO7eMe82xVAjD5BHn4T7BfRzEKmw3RmXrMzKq",
+    "password": "$2a$10$ypj4rvmfTnkBYLImUPkPjug8bc/ZK8/pKpYKH8Q.iD9doB1FZry4m",
     "role": "admin",
     "email": "admin@shiningstar.com",
     "created": "2024-01-01T00:00:00.000Z"

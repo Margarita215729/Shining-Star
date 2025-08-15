@@ -74,7 +74,7 @@ router.get('/login', (req, res) => {
   
   res.render('pages/admin/login', {
     title: res.__('admin.login'),
-    currentPage: 'login'
+    currentPage: 'admin-login'
   });
 });
 

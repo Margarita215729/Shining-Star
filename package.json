@@ -33,6 +33,15 @@
     "nodemon": "^3.0.1"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Margarita215729/Shining-Star.git"
+  },
+  "homepage": "https://github.com/Margarita215729/Shining-Star#readme",
+  "bugs": {
+    "url": "https://github.com/Margarita215729/Shining-Star/issues"
   }
 }

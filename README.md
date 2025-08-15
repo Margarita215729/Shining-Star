@@ -177,21 +177,97 @@ Edit `data/packages.json` to modify:
 
 ## Deployment
 
-### Environment Variables (Production)
+### Vercel Deployment (Recommended)
+
+This project is optimized for Vercel deployment with included `vercel.json` configuration.
+
+#### Quick Deploy to Vercel
+
+1. Fork this repository to your GitHub account
+2. Connect your GitHub account to [Vercel](https://vercel.com)
+3. Import the project from GitHub
+4. Set environment variables in Vercel dashboard:
+   ```bash
+   NODE_ENV=production
+   SESSION_SECRET=your-secure-session-secret-key-here
+   ```
+5. Deploy!
+
+#### Manual Vercel Deployment
+
 ```bash
-PORT=3000                                    # Server port
-NODE_ENV=production                          # Environment
-SESSION_SECRET=your-secret-key-here         # Session encryption key
+# Install Vercel CLI
+npm i -g vercel
+
+# Login to Vercel
+vercel login
+
+# Deploy
+vercel --prod
 ```
 
+### Environment Variables (Production)
+
+Required environment variables for production deployment:
+
+```bash
+NODE_ENV=production
+SESSION_SECRET=your-secure-session-secret-key-here
+PORT=3000                                      # Optional: Vercel sets this automatically
+```
+
+Optional environment variables:
+```bash
+ADMIN_PASSWORD_HASH=your-bcrypt-hash-here     # Custom admin password
+MAX_FILE_SIZE=5242880                         # 5MB upload limit
+ALLOWED_FILE_TYPES=jpeg,jpg,png,gif          # Allowed image types
+```
+
+Copy `.env.example` to `.env` and update values for local development.
+
 ### Production Checklist
-- [ ] Change default admin password
-- [ ] Set strong session secret
-- [ ] Enable HTTPS
-- [ ] Configure proper error logging
-- [ ] Set up database (if upgrading from JSON)
-- [ ] Configure backup strategy for uploads
-- [ ] Set up monitoring and analytics
+
+**Security & Configuration:**
+- [x] Session secret uses environment variable
+- [x] Secure cookies enabled in production
+- [x] Helmet.js security headers configured
+- [x] File upload validation implemented
+- [x] Input sanitization in place
+
+**Deployment Ready:**
+- [x] Vercel configuration optimized
+- [x] Static assets properly configured
+- [x] Environment variables documented
+- [x] Node.js version specified
+- [x] Production scripts ready
+
+**Post-Deployment Tasks:**
+- [ ] Test all functionality on production
+- [ ] Update admin password from default
+- [ ] Configure custom domain (if needed)
+- [ ] Set up monitoring/analytics
+- [ ] Test mobile responsiveness
+- [ ] Verify multilingual functionality
+
+### Other Hosting Platforms
+
+#### Railway
+```bash
+# Connect to Railway
+railway login
+railway init
+railway up
+```
+
+#### Heroku
+```bash
+# Create Heroku app
+heroku create your-app-name
+git push heroku main
+```
+
+#### DigitalOcean App Platform
+Use the included `vercel.json` as reference for app configuration.
 
 ## Browser Support
 - Chrome 70+

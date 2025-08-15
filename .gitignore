@@ -112,3 +112,11 @@ Thumbs.db
 # Uploaded files (keep structure but not content)
 public/uploads/*
 !public/uploads/.gitkeep
+
+# Deployment specific
+.vercel
+.railway
+.netlify
+
+# Local development
+test-password.js

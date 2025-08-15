@@ -1,11 +1,29 @@
 // Admin panel functionality for Shining Star Cleaning Services
 
+// Utility function for button loading state (fallback if ShiningStarUtils not available)
+function setButtonLoading(button, isLoading) {
+    if (window.ShiningStarUtils && window.ShiningStarUtils.setButtonLoading) {
+        window.ShiningStarUtils.setButtonLoading(button, isLoading);
+    } else {
+        // Fallback implementation
+        if (isLoading) {
+            button.disabled = true;
+            button.dataset.originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+        } else {
+            button.disabled = false;
+            button.innerHTML = button.dataset.originalText || button.textContent;
+        }
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize based on current page
     const currentPage = document.body.dataset.page || getPageFromURL();
     
     switch (currentPage) {
         case 'login':
+        case 'admin-login':
             initLoginPage();
             break;
         case 'dashboard':
@@ -87,7 +105,7 @@ async function submitLogin() {
     const submitButton = form.querySelector('button[type="submit"]');
     
     // Show loading state
-    window.ShiningStarUtils.setButtonLoading(submitButton, true);
+    setButtonLoading(submitButton, true);
     
     try {
         const response = await fetch('/admin/login', {
@@ -113,7 +131,7 @@ async function submitLogin() {
         console.error('Login error:', error);
         showLoginError('Login failed. Please try again.');
     } finally {
-        window.ShiningStarUtils.setButtonLoading(submitButton, false);
+        setButtonLoading(submitButton, false);
     }
 }
 
@@ -248,7 +266,7 @@ async function submitPortfolioItem() {
     formData.append('description', JSON.stringify(description));
     
     // Show loading state
-    window.ShiningStarUtils.setButtonLoading(submitButton, true);
+    setButtonLoading(submitButton, true);
     
     try {
         const response = await fetch('/admin/portfolio', {
@@ -269,7 +287,7 @@ async function submitPortfolioItem() {
         console.error('Portfolio add error:', error);
         alert('Error adding portfolio item. Please try again.');
     } finally {
-        window.ShiningStarUtils.setButtonLoading(submitButton, false);
+        setButtonLoading(submitButton, false);
     }
 }
 
