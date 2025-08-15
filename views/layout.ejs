@@ -28,6 +28,14 @@
 
         <%- include('partials/footer') %>
 
+            <!-- Scroll to Top Button -->
+            <button id="scroll-to-top" class="scroll-to-top" onclick="scrollToTop()" style="display: none;">
+                <i class="fas fa-arrow-up"></i>
+            </button>
+
+            <!-- Notification Container -->
+            <div id="notification-container" class="notification-container"></div>
+
             <!-- JavaScript -->
             <script src="/js/main.js"></script>
             <% if (currentPage==='services' ) { %>

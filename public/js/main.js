@@ -15,6 +15,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize loading states
     initLoadingStates();
+    
+    // Initialize touch gestures
+    initTouchGestures();
+    
+    // Initialize lazy loading
+    initLazyLoading();
 });
 
 // Mobile Navigation
@@ -314,6 +320,37 @@ function fadeOut(element, duration = 300) {
     requestAnimationFrame(animate);
 }
 
+// Touch Gestures for Mobile
+function initTouchGestures() {
+    let startY = 0;
+    let isScrolling = false;
+    
+    // Add touch swipe for mobile navigation
+    document.addEventListener('touchstart', function(e) {
+        startY = e.touches[0].clientY;
+        isScrolling = false;
+    });
+    
+    document.addEventListener('touchmove', function(e) {
+        isScrolling = true;
+    });
+    
+    document.addEventListener('touchend', function(e) {
+        if (isScrolling) return;
+        
+        const endY = e.changedTouches[0].clientY;
+        const diff = startY - endY;
+        
+        // Swipe up to show scroll to top
+        if (diff > 50 && window.pageYOffset > 300) {
+            const scrollButton = document.getElementById('scroll-to-top');
+            if (scrollButton) {
+                scrollButton.style.display = 'block';
+            }
+        }
+    });
+}
+
 // Scroll to top function
 function scrollToTop() {
     window.scrollTo({
@@ -346,3 +383,109 @@ window.ShiningStarUtils = {
     debounce,
     throttle
 };
+
+// Notification System
+function showNotification(type, title, message, duration = 5000) {
+    const container = document.getElementById('notification-container');
+    if (!container) return;
+    
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    
+    const icons = {
+        success: 'fas fa-check-circle',
+        error: 'fas fa-exclamation-circle',
+        info: 'fas fa-info-circle',
+        warning: 'fas fa-exclamation-triangle'
+    };
+    
+    notification.innerHTML = `
+        <div class="notification-icon">
+            <i class="${icons[type] || icons.info}"></i>
+        </div>
+        <div class="notification-content">
+            <div class="notification-title">${title}</div>
+            <div class="notification-message">${message}</div>
+        </div>
+        <button class="notification-close" onclick="removeNotification(this.parentElement)">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+    
+    container.appendChild(notification);
+    
+    // Trigger animation
+    setTimeout(() => notification.classList.add('show'), 10);
+    
+    // Auto-remove
+    setTimeout(() => removeNotification(notification), duration);
+    
+    return notification;
+}
+
+function removeNotification(notification) {
+    if (!notification) return;
+    
+    notification.classList.remove('show');
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.parentElement.removeChild(notification);
+        }
+    }, 300);
+}
+
+// Update ShiningStarUtils with new functions
+window.ShiningStarUtils.showNotification = showNotification;
+window.ShiningStarUtils.removeNotification = removeNotification;
+
+// Lazy Loading for Images
+function initLazyLoading() {
+    const images = document.querySelectorAll('img[data-src]');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy');
+                    img.classList.add('loaded');
+                    observer.unobserve(img);
+                }
+            });
+        });
+        
+        images.forEach(img => imageObserver.observe(img));
+    } else {
+        // Fallback for older browsers
+        images.forEach(img => {
+            img.src = img.dataset.src;
+            img.classList.remove('lazy');
+            img.classList.add('loaded');
+        });
+    }
+}
+
+// Performance Optimization: Debounced Scroll Handler
+let ticking = false;
+function optimizedScrollHandler() {
+    if (!ticking) {
+        requestAnimationFrame(() => {
+            // Handle scroll events here
+            const scrollButton = document.getElementById('scroll-to-top');
+            if (scrollButton) {
+                if (window.pageYOffset > 300) {
+                    scrollButton.style.display = 'block';
+                } else {
+                    scrollButton.style.display = 'none';
+                }
+            }
+            ticking = false;
+        });
+        ticking = true;
+    }
+}
+
+// Replace the scroll event listener
+window.removeEventListener('scroll', function() {});
+window.addEventListener('scroll', optimizedScrollHandler);

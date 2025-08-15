@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize quote form
     initQuoteForm();
+    
+    // Initialize form validation
+    initFormValidation();
 });
 
 let selectedServices = [];
@@ -285,7 +288,22 @@ async function submitQuoteRequest() {
     const submitButton = form.querySelector('button[type="submit"]');
     
     if (!currentQuote) {
-        alert('No services selected');
+        window.ShiningStarUtils.showNotification(
+            'warning',
+            'No Services Selected',
+            'Please select services before submitting.'
+        );
+        return;
+    }
+    
+    // Validate form fields
+    const validationErrors = validateQuoteForm(form);
+    if (validationErrors.length > 0) {
+        window.ShiningStarUtils.showNotification(
+            'error',
+            'Validation Error',
+            validationErrors.join(', ')
+        );
         return;
     }
     
@@ -316,18 +334,30 @@ async function submitQuoteRequest() {
         const result = await response.json();
         
         if (result.success) {
-            // Show success message
-            alert(`Success! Your service request has been submitted. Request ID: ${result.requestId}`);
+            // Show success notification
+            window.ShiningStarUtils.showNotification(
+                'success',
+                'Request Submitted!',
+                `Your service request has been submitted. Request ID: ${result.requestId}`
+            );
             
             // Close modal and reset selections
             closeQuoteModal();
             resetSelections();
         } else {
-            alert(result.error || 'Error submitting request');
+            window.ShiningStarUtils.showNotification(
+                'error',
+                'Submission Failed',
+                result.error || 'Error submitting request'
+            );
         }
     } catch (error) {
         console.error('Quote request error:', error);
-        alert('Error submitting request. Please try again.');
+        window.ShiningStarUtils.showNotification(
+            'error',
+            'Connection Error',
+            'Error submitting request. Please try again.'
+        );
     } finally {
         window.ShiningStarUtils.setButtonLoading(submitButton, false);
     }
@@ -387,3 +417,145 @@ window.ServicesPage = {
     resetSelections,
     calculateQuoteAPI
 };
+
+// Form Validation
+function validateQuoteForm(form) {
+    const errors = [];
+    
+    // Name validation
+    const name = form.querySelector('#quote-name').value.trim();
+    if (!name || name.length < 2) {
+        errors.push('Name must be at least 2 characters');
+    }
+    
+    // Email validation
+    const email = form.querySelector('#quote-email').value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+        errors.push('Valid email address is required');
+    }
+    
+    // Phone validation
+    const phone = form.querySelector('#quote-phone').value.trim();
+    const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+    if (!phone || !phoneRegex.test(phone.replace(/[\s\-\(\)]/g, ''))) {
+        errors.push('Valid phone number is required');
+    }
+    
+    // Address validation
+    const address = form.querySelector('#quote-address').value.trim();
+    if (!address || address.length < 10) {
+        errors.push('Complete address is required');
+    }
+    
+    // Date validation
+    const preferredDate = form.querySelector('#quote-date').value;
+    if (!preferredDate) {
+        errors.push('Preferred date is required');
+    } else {
+        const selectedDate = new Date(preferredDate);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        if (selectedDate < today) {
+            errors.push('Preferred date cannot be in the past');
+        }
+    }
+    
+    return errors;
+}
+
+// Real-time form validation
+function initFormValidation() {
+    const form = document.getElementById('quote-form');
+    if (!form) return;
+    
+    const inputs = form.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            validateField(this);
+        });
+        
+        input.addEventListener('input', function() {
+            clearFieldError(this);
+        });
+    });
+}
+
+function validateField(field) {
+    const fieldName = field.name;
+    const value = field.value.trim();
+    let isValid = true;
+    let errorMessage = '';
+    
+    switch(fieldName) {
+        case 'name':
+            if (!value || value.length < 2) {
+                isValid = false;
+                errorMessage = 'Name must be at least 2 characters';
+            }
+            break;
+        case 'email':
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!value || !emailRegex.test(value)) {
+                isValid = false;
+                errorMessage = 'Valid email address is required';
+            }
+            break;
+        case 'phone':
+            const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+            if (!value || !phoneRegex.test(value.replace(/[\s\-\(\)]/g, ''))) {
+                isValid = false;
+                errorMessage = 'Valid phone number is required';
+            }
+            break;
+        case 'address':
+            if (!value || value.length < 10) {
+                isValid = false;
+                errorMessage = 'Complete address is required';
+            }
+            break;
+        case 'preferredDate':
+            if (!value) {
+                isValid = false;
+                errorMessage = 'Preferred date is required';
+            } else {
+                const selectedDate = new Date(value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                if (selectedDate < today) {
+                    isValid = false;
+                    errorMessage = 'Preferred date cannot be in the past';
+                }
+            }
+            break;
+    }
+    
+    if (!isValid) {
+        showFieldError(field, errorMessage);
+    } else {
+        clearFieldError(field);
+    }
+    
+    return isValid;
+}
+
+function showFieldError(field, message) {
+    clearFieldError(field);
+    
+    field.classList.add('error');
+    const errorElement = document.createElement('div');
+    errorElement.className = 'field-error';
+    errorElement.textContent = message;
+    
+    field.parentNode.appendChild(errorElement);
+}
+
+function clearFieldError(field) {
+    field.classList.remove('error');
+    const existingError = field.parentNode.querySelector('.field-error');
+    if (existingError) {
+        existingError.remove();
+    }
+}
