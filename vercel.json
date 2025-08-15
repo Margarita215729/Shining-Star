@@ -1,27 +1,14 @@
 {
     "version": 2,
-    "builds": [
-        {
-            "src": "server.js",
-            "use": "@vercel/node"
+    "functions": {
+        "server.js": {
+            "includeFiles": "views/**,locales/**,public/**"
         }
-    ],
-    "routes": [
+    },
+    "rewrites": [
         {
-            "src": "/assets/(.*)",
-            "dest": "/public/assets/$1"
-        },
-        {
-            "src": "/css/(.*)",
-            "dest": "/public/css/$1"
-        },
-        {
-            "src": "/js/(.*)",
-            "dest": "/public/js/$1"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "server.js"
+            "source": "/(.*)",
+            "destination": "/server.js"
         }
     ]
 }
