@@ -19,9 +19,10 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
       scriptSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", "data:", "https:"],
+      fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"]
     }
   }
 }));
@@ -57,6 +58,7 @@ i18n.configure({
   queryParameter: 'lang',
   autoReload: true,
   updateFiles: false,
+  objectNotation: true,
   api: {
     '__': '__',
     '__n': '__n'
@@ -97,9 +99,11 @@ app.use((req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`🌟 Shining Star Cleaning Services server running on port ${PORT}`);
-  console.log(`🔗 Access the website at: http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🌟 Shining Star Cleaning Services server running on port ${PORT}`);
+    console.log(`🔗 Access the website at: http://localhost:${PORT}`);
+  });
+}
 
 module.exports = app;
