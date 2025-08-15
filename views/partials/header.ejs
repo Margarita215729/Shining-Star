@@ -1,0 +1,42 @@
+<header class="header">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="/">
+                    <i class="fas fa-star"></i>
+                    <%= t.siteName %>
+                </a>
+            </div>
+            
+            <div class="nav-menu" id="nav-menu">
+                <a href="/" class="nav-link"><%= t.home %></a>
+                <a href="/services" class="nav-link"><%= t.services %></a>
+                <a href="/portfolio" class="nav-link"><%= t.portfolio %></a>
+                <a href="/packages" class="nav-link"><%= t.packages %></a>
+                <a href="/contact" class="nav-link"><%= t.contact %></a>
+            </div>
+            
+            <div class="nav-actions">
+                <div class="language-switcher">
+                    <div class="dropdown">
+                        <button class="dropdown-btn">
+                            <i class="fas fa-globe"></i>
+                            <%= lang.toUpperCase() %>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="/lang/en">English</a>
+                            <a href="/lang/ru">Русский</a>
+                            <a href="/lang/es">Español</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

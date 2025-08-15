@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="<%= lang %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - <%= t.siteName %></title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1><%= t.heroTitle %></h1>
+            <p><%= t.heroSubtitle %></p>
+            <a href="/contact" class="btn btn-primary"><%= t.heroButton %></a>
+        </div>
+        <div class="hero-image">
+            <i class="fas fa-broom hero-icon"></i>
+        </div>
+    </section>
+    
+    <!-- Services Preview -->
+    <section class="services-preview">
+        <div class="container">
+            <h2><%= t.servicesTitle %></h2>
+            <p class="section-subtitle"><%= t.servicesSubtitle %></p>
+            
+            <div class="services-grid">
+                <% services.forEach(service => { %>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <% if (service.category === 'kitchen') { %>
+                            <i class="fas fa-utensils"></i>
+                        <% } else if (service.category === 'bathroom') { %>
+                            <i class="fas fa-bath"></i>
+                        <% } else if (service.category === 'living') { %>
+                            <i class="fas fa-couch"></i>
+                        <% } else if (service.category === 'deep') { %>
+                            <i class="fas fa-spray-can"></i>
+                        <% } else { %>
+                            <i class="fas fa-broom"></i>
+                        <% } %>
+                    </div>
+                    <h3><%= service.name %></h3>
+                    <p><%= service.description %></p>
+                    <div class="service-meta">
+                        <span class="price">$<%= service.price %></span>
+                        <span class="duration"><%= service.duration %></span>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+            
+            <div class="text-center">
+                <a href="/services" class="btn btn-outline">View All Services</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Portfolio Preview -->
+    <section class="portfolio-preview">
+        <div class="container">
+            <h2><%= t.portfolioTitle %></h2>
+            <p class="section-subtitle"><%= t.portfolioSubtitle %></p>
+            
+            <div class="portfolio-grid">
+                <% portfolio.forEach(item => { %>
+                <div class="portfolio-item">
+                    <div class="before-after">
+                        <div class="before">
+                            <img src="<%= item.beforeImage %>" alt="Before: <%= item.title %>" onerror="this.src='/images/placeholder.jpg'">
+                            <div class="overlay">Before</div>
+                        </div>
+                        <div class="after">
+                            <img src="<%= item.afterImage %>" alt="After: <%= item.title %>" onerror="this.src='/images/placeholder.jpg'">
+                            <div class="overlay">After</div>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h4><%= item.title %></h4>
+                        <p><%= item.description %></p>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+            
+            <div class="text-center">
+                <a href="/portfolio" class="btn btn-outline">View Full Portfolio</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Packages Preview -->
+    <section class="packages-preview">
+        <div class="container">
+            <h2><%= t.packagesTitle %></h2>
+            <p class="section-subtitle"><%= t.packagesSubtitle %></p>
+            
+            <div class="packages-grid">
+                <% packages.forEach(package => { %>
+                <div class="package-card">
+                    <div class="package-header">
+                        <h3><%= package.name %></h3>
+                        <div class="package-discount"><%= package.discount %></div>
+                    </div>
+                    <div class="package-pricing">
+                        <span class="original-price">$<%= package.originalPrice %></span>
+                        <span class="discount-price">$<%= package.discountPrice %></span>
+                    </div>
+                    <p><%= package.description %></p>
+                    <a href="/packages" class="btn btn-secondary"><%= t.selectPackage %></a>
+                </div>
+                <% }); %>
+            </div>
+            
+            <div class="text-center">
+                <a href="/packages" class="btn btn-outline">View All Packages</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Call to Action -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Get Started?</h2>
+            <p>Contact us today for a free consultation and quote</p>
+            <a href="/contact" class="btn btn-primary">Get Free Quote</a>
+        </div>
+    </section>
+    
+    <%- include('../partials/footer') %>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

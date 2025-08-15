@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "title": "Kitchen Transformation",
+    "description": "Complete kitchen deep clean with appliance detailing",
+    "beforeImage": "/images/before-kitchen.jpg",
+    "afterImage": "/images/after-kitchen.jpg",
+    "createdAt": "2024-01-15T10:00:00Z"
+  },
+  {
+    "id": 2,
+    "title": "Bathroom Renovation Clean",
+    "description": "Post-renovation cleaning and sanitization",
+    "beforeImage": "/images/before-bathroom.jpg",
+    "afterImage": "/images/after-bathroom.jpg",
+    "createdAt": "2024-01-20T14:30:00Z"
+  },
+  {
+    "id": 3,
+    "title": "Living Room Revival",
+    "description": "Deep carpet cleaning and furniture restoration",
+    "beforeImage": "/images/before-living.jpg",
+    "afterImage": "/images/after-living.jpg",
+    "createdAt": "2024-01-25T09:15:00Z"
+  },
+  {
+    "id": 4,
+    "title": "Office Space Cleaning",
+    "description": "Professional office deep clean and organization",
+    "beforeImage": "/images/before-office.jpg",
+    "afterImage": "/images/after-office.jpg",
+    "createdAt": "2024-02-01T11:45:00Z"
+  }
+]

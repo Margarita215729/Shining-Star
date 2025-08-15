@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="<%= lang %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - <%= t.siteName %></title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <main class="main-content">
+        <section class="page-header">
+            <div class="container">
+                <h1><%= t.portfolioTitle %></h1>
+                <p><%= t.portfolioSubtitle %></p>
+            </div>
+        </section>
+        
+        <section class="portfolio-section">
+            <div class="container">
+                <div class="portfolio-grid">
+                    <% portfolio.forEach(item => { %>
+                    <div class="portfolio-item">
+                        <div class="before-after">
+                            <div class="before">
+                                <img src="<%= item.beforeImage %>" alt="Before: <%= item.title %>" onerror="this.src='/images/placeholder-before.jpg'">
+                                <div class="overlay">Before</div>
+                            </div>
+                            <div class="after">
+                                <img src="<%= item.afterImage %>" alt="After: <%= item.title %>" onerror="this.src='/images/placeholder-after.jpg'">
+                                <div class="overlay">After</div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h4><%= item.title %></h4>
+                            <p><%= item.description %></p>
+                            <div class="portfolio-meta">
+                                <span class="date">
+                                    <i class="fas fa-calendar"></i>
+                                    <%= new Date(item.createdAt).toLocaleDateString() %>
+                                </span>
+                                <button class="view-detail-btn" data-id="<%= item.id %>">
+                                    <i class="fas fa-expand"></i>
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+                </div>
+                
+                <% if (portfolio.length === 0) { %>
+                <div class="empty-state">
+                    <i class="fas fa-images"></i>
+                    <h3>No Portfolio Items Yet</h3>
+                    <p>Check back soon to see our amazing transformations!</p>
+                </div>
+                <% } %>
+            </div>
+        </section>
+        
+        <!-- Call to Action -->
+        <section class="cta">
+            <div class="container">
+                <h2>Want Your Space to Look This Good?</h2>
+                <p>Let us transform your space with our professional cleaning services</p>
+                <a href="/contact" class="btn btn-primary">Get Your Free Quote</a>
+            </div>
+        </section>
+    </main>
+    
+    <%- include('../partials/footer') %>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

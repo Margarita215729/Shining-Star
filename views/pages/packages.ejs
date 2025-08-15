@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="<%= lang %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - <%= t.siteName %></title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <main class="main-content">
+        <section class="page-header">
+            <div class="container">
+                <h1><%= t.packagesTitle %></h1>
+                <p><%= t.packagesSubtitle %></p>
+            </div>
+        </section>
+        
+        <section class="packages-section">
+            <div class="container">
+                <div class="packages-grid">
+                    <% packages.forEach(package => { %>
+                    <div class="package-card featured">
+                        <div class="package-header">
+                            <h3><%= package.name %></h3>
+                            <div class="package-discount"><%= package.discount %></div>
+                        </div>
+                        
+                        <div class="package-pricing">
+                            <span class="original-price">$<%= package.originalPrice %></span>
+                            <span class="discount-price">$<%= package.discountPrice %></span>
+                        </div>
+                        
+                        <p class="package-description"><%= package.description %></p>
+                        
+                        <div class="package-services">
+                            <h4>Included Services:</h4>
+                            <ul>
+                                <% package.services.forEach(serviceId => { %>
+                                    <% const service = services.find(s => s.id == serviceId); %>
+                                    <% if (service) { %>
+                                    <li>
+                                        <i class="fas fa-check"></i>
+                                        <%= service.name %> - $<%= service.price %>
+                                    </li>
+                                    <% } %>
+                                <% }); %>
+                            </ul>
+                        </div>
+                        
+                        <div class="package-savings">
+                            <div class="savings-amount">
+                                You Save: $<%= (package.originalPrice - package.discountPrice).toFixed(2) %>
+                            </div>
+                        </div>
+                        
+                        <div class="package-actions">
+                            <a href="/contact?package=<%= encodeURIComponent(package.name) %>&price=<%= package.discountPrice %>" class="btn btn-primary">
+                                <i class="fas fa-shopping-cart"></i>
+                                <%= t.selectPackage %>
+                            </a>
+                            <button class="btn btn-outline compare-btn" data-package='<%= JSON.stringify(package) %>'>
+                                <i class="fas fa-balance-scale"></i>
+                                Compare
+                            </button>
+                        </div>
+                    </div>
+                    <% }); %>
+                </div>
+                
+                <% if (packages.length === 0) { %>
+                <div class="empty-state">
+                    <i class="fas fa-box-open"></i>
+                    <h3>No Packages Available</h3>
+                    <p>Check back soon for special package deals!</p>
+                    <a href="/services" class="btn btn-primary">View Individual Services</a>
+                </div>
+                <% } %>
+            </div>
+        </section>
+        
+        <!-- Package Comparison Modal -->
+        <div id="comparison-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Package Comparison</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="comparison-table"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Custom Package Builder -->
+        <section class="custom-package-section">
+            <div class="container">
+                <div class="custom-package-header">
+                    <h2>Create Your Custom Package</h2>
+                    <p>Don't see what you need? Build your own custom cleaning package</p>
+                </div>
+                
+                <div class="custom-package-builder">
+                    <div class="package-builder-form">
+                        <h3>Select Services</h3>
+                        <div class="services-checklist">
+                            <% services.forEach(service => { %>
+                            <label class="service-option">
+                                <input type="checkbox" name="customServices" value="<%= service.id %>" data-price="<%= service.price %>" data-name="<%= service.name %>">
+                                <span class="service-details">
+                                    <span class="service-name"><%= service.name %></span>
+                                    <span class="service-price">$<%= service.price %></span>
+                                </span>
+                            </label>
+                            <% }); %>
+                        </div>
+                    </div>
+                    
+                    <div class="package-summary">
+                        <h3>Your Custom Package</h3>
+                        <div class="selected-services">
+                            <div id="custom-services-list">
+                                <p class="empty-message">No services selected</p>
+                            </div>
+                        </div>
+                        <div class="package-total">
+                            <div class="total-calculation">
+                                <div class="subtotal">
+                                    Subtotal: <span id="custom-subtotal">$0.00</span>
+                                </div>
+                                <div class="discount">
+                                    Bulk Discount (10%): <span id="custom-discount">-$0.00</span>
+                                </div>
+                                <div class="total">
+                                    Total: <span id="custom-total">$0.00</span>
+                                </div>
+                            </div>
+                            <button id="request-custom-quote" class="btn btn-primary" style="display: none;">
+                                Request Custom Quote
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Why Choose Our Packages -->
+        <section class="why-packages">
+            <div class="container">
+                <h2>Why Choose Our Packages?</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <i class="fas fa-piggy-bank"></i>
+                        <h4>Save Money</h4>
+                        <p>Get more value with bundled services at discounted prices</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-clock"></i>
+                        <h4>Save Time</h4>
+                        <p>Everything you need in one convenient package</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-medal"></i>
+                        <h4>Quality Guaranteed</h4>
+                        <p>Professional results with satisfaction guarantee</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-users"></i>
+                        <h4>Expert Team</h4>
+                        <p>Trained professionals with years of experience</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <%- include('../partials/footer') %>
+    
+    <script src="/js/main.js"></script>
+    <script src="/js/packages.js"></script>
+</body>
+</html>

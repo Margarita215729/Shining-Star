@@ -1,0 +1,95 @@
+{
+  "siteName": "Shining Star",
+  "home": "Home",
+  "services": "Services",
+  "portfolio": "Portfolio",
+  "packages": "Packages",
+  "contact": "Contact",
+  "about": "About",
+  "admin": "Admin",
+  "login": "Login",
+  "logout": "Logout",
+  
+  "heroTitle": "Professional Cleaning Services",
+  "heroSubtitle": "Your trusted partner for spotless homes and offices",
+  "heroButton": "Get Started",
+  
+  "servicesTitle": "Our Services",
+  "servicesSubtitle": "Comprehensive cleaning solutions tailored to your needs",
+  
+  "portfolioTitle": "Our Work",
+  "portfolioSubtitle": "See the amazing transformations we deliver",
+  "beforeAfter": "Before & After",
+  
+  "packagesTitle": "Service Packages",
+  "packagesSubtitle": "Special offers and bundled services",
+  "originalPrice": "Original Price",
+  "discountPrice": "Discount Price",
+  "save": "Save",
+  "selectPackage": "Select Package",
+  
+  "contactTitle": "Contact Us",
+  "contactSubtitle": "Get in touch for a free quote",
+  "name": "Name",
+  "email": "Email",
+  "phone": "Phone",
+  "message": "Message",
+  "selectServices": "Select Services",
+  "sendMessage": "Send Message",
+  "contactSuccess": "Thank you! We'll get back to you soon.",
+  
+  "adminDashboard": "Admin Dashboard",
+  "addService": "Add Service",
+  "addPackage": "Add Package",
+  "addPortfolio": "Add Portfolio Item",
+  "serviceName": "Service Name",
+  "description": "Description",
+  "price": "Price",
+  "duration": "Duration",
+  "category": "Category",
+  "packageName": "Package Name",
+  "discount": "Discount",
+  "beforeImage": "Before Image",
+  "afterImage": "After Image",
+  "title": "Title",
+  "submit": "Submit",
+  
+  "serviceCategories": {
+    "kitchen": "Kitchen",
+    "bathroom": "Bathroom",
+    "living": "Living Areas",
+    "bedroom": "Bedrooms",
+    "office": "Office",
+    "deep": "Deep Cleaning",
+    "maintenance": "Maintenance"
+  },
+  
+  "serviceList": {
+    "refrigerator": "Refrigerator Cleaning",
+    "windows": "Window Cleaning",
+    "toilet": "Toilet Cleaning",
+    "bathroom": "Bathroom Deep Clean",
+    "mirrors": "Mirror Cleaning",
+    "floor": "Floor Cleaning",
+    "windowsills": "Windowsill Cleaning",
+    "carpetStains": "Carpet Stain Removal",
+    "wallStains": "Wall Stain Removal",
+    "oven": "Oven Cleaning",
+    "dishwasher": "Dishwasher Cleaning",
+    "cabinets": "Cabinet Cleaning",
+    "dusting": "Dusting",
+    "vacuuming": "Vacuuming",
+    "mopping": "Mopping"
+  },
+  
+  "footer": {
+    "company": "Company",
+    "services": "Services",
+    "contact": "Contact",
+    "followUs": "Follow Us",
+    "address": "123 Cleaning St, City, State 12345",
+    "phone": "+1 (555) 123-4567",
+    "email": "info@shiningstar.com",
+    "copyright": "© 2024 Shining Star. All rights reserved."
+  }
+}

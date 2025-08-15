@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "Kitchen Deep Clean Package",
+    "description": "Complete kitchen transformation including refrigerator, oven, cabinets, and all surfaces",
+    "originalPrice": 180,
+    "discountPrice": 139,
+    "services": ["1", "10", "11"],
+    "discount": "Save $41"
+  },
+  {
+    "id": 2,
+    "name": "Bathroom Luxury Package",
+    "description": "Full bathroom deep clean with toilet, mirrors, and premium sanitization",
+    "originalPrice": 105,
+    "discountPrice": 85,
+    "services": ["3", "4", "5"],
+    "discount": "Save $20"
+  },
+  {
+    "id": 3,
+    "name": "Whole Home Maintenance",
+    "description": "Regular maintenance cleaning for entire home including windows, floors, and general cleaning",
+    "originalPrice": 150,
+    "discountPrice": 110,
+    "services": ["2", "5", "6", "7", "12"],
+    "discount": "Save $40"
+  },
+  {
+    "id": 4,
+    "name": "Stain Removal Special",
+    "description": "Expert stain removal for carpets and walls with guarantee",
+    "originalPrice": 120,
+    "discountPrice": 79,
+    "services": ["8", "9"],
+    "discount": "Save $41"
+  },
+  {
+    "id": 5,
+    "name": "Move-In/Move-Out Package",
+    "description": "Complete property cleaning for new residents or before moving out",
+    "originalPrice": 350,
+    "discountPrice": 249,
+    "services": ["1", "2", "3", "4", "6", "10", "11", "12"],
+    "discount": "Save $101"
+  }
+]

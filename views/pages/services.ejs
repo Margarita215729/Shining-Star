@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="<%= lang %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - <%= t.siteName %></title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <main class="main-content">
+        <section class="page-header">
+            <div class="container">
+                <h1><%= t.servicesTitle %></h1>
+                <p><%= t.servicesSubtitle %></p>
+            </div>
+        </section>
+        
+        <section class="services-section">
+            <div class="container">
+                <!-- Service Categories Filter -->
+                <div class="service-filters">
+                    <button class="filter-btn active" data-category="all">All Services</button>
+                    <button class="filter-btn" data-category="kitchen"><%= t.serviceCategories.kitchen %></button>
+                    <button class="filter-btn" data-category="bathroom"><%= t.serviceCategories.bathroom %></button>
+                    <button class="filter-btn" data-category="living"><%= t.serviceCategories.living %></button>
+                    <button class="filter-btn" data-category="deep"><%= t.serviceCategories.deep %></button>
+                    <button class="filter-btn" data-category="maintenance"><%= t.serviceCategories.maintenance %></button>
+                </div>
+                
+                <!-- Services Grid -->
+                <div class="services-grid">
+                    <% services.forEach(service => { %>
+                    <div class="service-card detailed" data-category="<%= service.category %>">
+                        <div class="service-icon">
+                            <% if (service.category === 'kitchen') { %>
+                                <i class="fas fa-utensils"></i>
+                            <% } else if (service.category === 'bathroom') { %>
+                                <i class="fas fa-bath"></i>
+                            <% } else if (service.category === 'living') { %>
+                                <i class="fas fa-couch"></i>
+                            <% } else if (service.category === 'deep') { %>
+                                <i class="fas fa-spray-can"></i>
+                            <% } else { %>
+                                <i class="fas fa-broom"></i>
+                            <% } %>
+                        </div>
+                        <h3><%= service.name %></h3>
+                        <p><%= service.description %></p>
+                        <div class="service-meta">
+                            <span class="price">$<%= service.price %></span>
+                            <span class="duration"><%= service.duration %></span>
+                        </div>
+                        <div class="service-actions">
+                            <label class="service-select">
+                                <input type="checkbox" name="services" value="<%= service.id %>" data-price="<%= service.price %>">
+                                <span class="checkmark"></span>
+                                Select Service
+                            </label>
+                        </div>
+                    </div>
+                    <% }); %>
+                </div>
+                
+                <!-- Service Calculator -->
+                <div class="service-calculator">
+                    <div class="calculator-content">
+                        <h3>Service Calculator</h3>
+                        <div class="selected-services">
+                            <h4>Selected Services:</h4>
+                            <ul id="selected-services-list"></ul>
+                        </div>
+                        <div class="total-price">
+                            <strong>Total: <span id="total-price">$0.00</span></strong>
+                        </div>
+                        <a href="/contact" class="btn btn-primary" id="get-quote-btn">Get Quote</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Call to Action -->
+        <section class="cta">
+            <div class="container">
+                <h2>Ready to Book Your Cleaning?</h2>
+                <p>Contact us today for a personalized quote</p>
+                <a href="/contact" class="btn btn-primary">Get Started</a>
+            </div>
+        </section>
+    </main>
+    
+    <%- include('../partials/footer') %>
+    
+    <script src="/js/main.js"></script>
+    <script src="/js/services.js"></script>
+</body>
+</html>

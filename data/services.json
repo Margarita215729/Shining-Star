@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "name": "Refrigerator Deep Clean",
+    "description": "Complete interior and exterior cleaning of your refrigerator, including shelves, drawers, and coils",
+    "price": 45,
+    "duration": "1 hour",
+    "category": "kitchen"
+  },
+  {
+    "id": 2,
+    "name": "Window Cleaning",
+    "description": "Professional cleaning of windows inside and out, including frames and sills",
+    "price": 8,
+    "duration": "15 minutes per window",
+    "category": "maintenance"
+  },
+  {
+    "id": 3,
+    "name": "Toilet Deep Clean",
+    "description": "Thorough sanitization and cleaning of toilet bowl, seat, tank, and surrounding area",
+    "price": 25,
+    "duration": "30 minutes",
+    "category": "bathroom"
+  },
+  {
+    "id": 4,
+    "name": "Bathroom Deep Clean",
+    "description": "Complete bathroom cleaning including shower, tub, sink, mirrors, and floors",
+    "price": 65,
+    "duration": "1.5 hours",
+    "category": "bathroom"
+  },
+  {
+    "id": 5,
+    "name": "Mirror Cleaning",
+    "description": "Streak-free cleaning of all mirrors in your home",
+    "price": 15,
+    "duration": "20 minutes",
+    "category": "maintenance"
+  },
+  {
+    "id": 6,
+    "name": "Floor Deep Clean",
+    "description": "Comprehensive floor cleaning including mopping, scrubbing, and polishing",
+    "price": 35,
+    "duration": "45 minutes per room",
+    "category": "maintenance"
+  },
+  {
+    "id": 7,
+    "name": "Windowsill Cleaning",
+    "description": "Detailed cleaning of windowsills, removing dust, dirt, and grime",
+    "price": 12,
+    "duration": "10 minutes per sill",
+    "category": "maintenance"
+  },
+  {
+    "id": 8,
+    "name": "Carpet Stain Removal",
+    "description": "Professional treatment of carpet stains using specialized equipment and solutions",
+    "price": 50,
+    "duration": "30 minutes per stain",
+    "category": "deep"
+  },
+  {
+    "id": 9,
+    "name": "Wall Stain Removal",
+    "description": "Expert removal of stains from walls without damaging paint or wallpaper",
+    "price": 40,
+    "duration": "20 minutes per stain",
+    "category": "deep"
+  },
+  {
+    "id": 10,
+    "name": "Oven Deep Clean",
+    "description": "Complete oven cleaning including racks, interior, and glass door",
+    "price": 55,
+    "duration": "1.5 hours",
+    "category": "kitchen"
+  },
+  {
+    "id": 11,
+    "name": "Kitchen Cabinet Cleaning",
+    "description": "Interior and exterior cleaning of kitchen cabinets and drawers",
+    "price": 38,
+    "duration": "1 hour",
+    "category": "kitchen"
+  },
+  {
+    "id": 12,
+    "name": "Living Room Deep Clean",
+    "description": "Comprehensive cleaning of living areas including dusting, vacuuming, and surface cleaning",
+    "price": 75,
+    "duration": "2 hours",
+    "category": "living"
+  }
+]

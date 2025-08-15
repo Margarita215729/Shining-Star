@@ -1,0 +1,95 @@
+{
+  "siteName": "Estrella Brillante",
+  "home": "Inicio",
+  "services": "Servicios",
+  "portfolio": "Portafolio",
+  "packages": "Paquetes",
+  "contact": "Contacto",
+  "about": "Acerca de",
+  "admin": "Admin",
+  "login": "Iniciar sesión",
+  "logout": "Cerrar sesión",
+  
+  "heroTitle": "Servicios de Limpieza Profesional",
+  "heroSubtitle": "Su socio de confianza para hogares y oficinas impecables",
+  "heroButton": "Comenzar",
+  
+  "servicesTitle": "Nuestros Servicios",
+  "servicesSubtitle": "Soluciones de limpieza integrales adaptadas a sus necesidades",
+  
+  "portfolioTitle": "Nuestro Trabajo",
+  "portfolioSubtitle": "Vea las increíbles transformaciones que entregamos",
+  "beforeAfter": "Antes y Después",
+  
+  "packagesTitle": "Paquetes de Servicios",
+  "packagesSubtitle": "Ofertas especiales y servicios agrupados",
+  "originalPrice": "Precio Original",
+  "discountPrice": "Precio con Descuento",
+  "save": "Ahorrar",
+  "selectPackage": "Seleccionar Paquete",
+  
+  "contactTitle": "Contáctanos",
+  "contactSubtitle": "Póngase en contacto para una cotización gratuita",
+  "name": "Nombre",
+  "email": "Correo electrónico",
+  "phone": "Teléfono",
+  "message": "Mensaje",
+  "selectServices": "Seleccionar Servicios",
+  "sendMessage": "Enviar Mensaje",
+  "contactSuccess": "¡Gracias! Nos pondremos en contacto contigo pronto.",
+  
+  "adminDashboard": "Panel de Administración",
+  "addService": "Agregar Servicio",
+  "addPackage": "Agregar Paquete",
+  "addPortfolio": "Agregar Elemento del Portafolio",
+  "serviceName": "Nombre del Servicio",
+  "description": "Descripción",
+  "price": "Precio",
+  "duration": "Duración",
+  "category": "Categoría",
+  "packageName": "Nombre del Paquete",
+  "discount": "Descuento",
+  "beforeImage": "Imagen Antes",
+  "afterImage": "Imagen Después",
+  "title": "Título",
+  "submit": "Enviar",
+  
+  "serviceCategories": {
+    "kitchen": "Cocina",
+    "bathroom": "Baño",
+    "living": "Áreas de Estar",
+    "bedroom": "Dormitorios",
+    "office": "Oficina",
+    "deep": "Limpieza Profunda",
+    "maintenance": "Mantenimiento"
+  },
+  
+  "serviceList": {
+    "refrigerator": "Limpieza de Refrigerador",
+    "windows": "Limpieza de Ventanas",
+    "toilet": "Limpieza de Inodoro",
+    "bathroom": "Limpieza Profunda de Baño",
+    "mirrors": "Limpieza de Espejos",
+    "floor": "Limpieza de Pisos",
+    "windowsills": "Limpieza de Alféizares",
+    "carpetStains": "Eliminación de Manchas de Alfombra",
+    "wallStains": "Eliminación de Manchas de Paredes",
+    "oven": "Limpieza de Horno",
+    "dishwasher": "Limpieza de Lavavajillas",
+    "cabinets": "Limpieza de Gabinetes",
+    "dusting": "Quitar el Polvo",
+    "vacuuming": "Aspirado",
+    "mopping": "Trapear"
+  },
+  
+  "footer": {
+    "company": "Empresa",
+    "services": "Servicios",
+    "contact": "Contacto",
+    "followUs": "Síguenos",
+    "address": "123 Calle de Limpieza, Ciudad, Estado 12345",
+    "phone": "+1 (555) 123-4567",
+    "email": "info@shiningstar.com",
+    "copyright": "© 2024 Estrella Brillante. Todos los derechos reservados."
+  }
+}
