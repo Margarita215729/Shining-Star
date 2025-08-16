@@ -148,7 +148,9 @@ function initDashboardStats() {
 
     statNumbers.forEach(stat => {
         const finalValue = parseInt(stat.textContent);
-        animateNumber(stat, 0, finalValue, 1000);
+        // Handle NaN values by defaulting to 0
+        const targetValue = isNaN(finalValue) ? 0 : finalValue;
+        animateNumber(stat, 0, targetValue, 1000);
     });
 }
 

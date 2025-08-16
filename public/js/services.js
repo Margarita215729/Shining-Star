@@ -453,11 +453,14 @@ function validateQuoteForm(form) {
     if (!preferredDate) {
         errors.push('Preferred date is required');
     } else {
-        const selectedDate = new Date(preferredDate);
+        // Use date strings for comparison to avoid timezone issues
+        const selectedDateStr = preferredDate; // Already in YYYY-MM-DD format
         const today = new Date();
-        today.setHours(0, 0, 0, 0);
+        const todayStr = today.getFullYear() + '-' + 
+            String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+            String(today.getDate()).padStart(2, '0');
 
-        if (selectedDate < today) {
+        if (selectedDateStr < todayStr) {
             errors.push('Preferred date cannot be in the past');
         }
     }
@@ -520,11 +523,14 @@ function validateField(field) {
                 isValid = false;
                 errorMessage = 'Preferred date is required';
             } else {
-                const selectedDate = new Date(value);
+                // Use date strings for comparison to avoid timezone issues
+                const selectedDateStr = value; // Already in YYYY-MM-DD format
                 const today = new Date();
-                today.setHours(0, 0, 0, 0);
+                const todayStr = today.getFullYear() + '-' + 
+                    String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                    String(today.getDate()).padStart(2, '0');
 
-                if (selectedDate < today) {
+                if (selectedDateStr < todayStr) {
                     isValid = false;
                     errorMessage = 'Preferred date cannot be in the past';
                 }
