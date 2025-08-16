@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const path = require('path');
 const fs = require('fs').promises;
 const multer = require('multer');
+const { Service, Package, Portfolio, User } = require('../utils/database');
 
 // Helper function to read JSON data
 async function readJSONFile(filePath) {
@@ -336,7 +337,7 @@ router.post('/portfolio', requireAuth, upload.fields([
 // Manage services
 router.get('/services', requireAuth, async (req, res) => {
   try {
-    const services = await readJSONFile('services.json');
+    const services = await Service.find().sort({ createdAt: -1 });
 
     res.render('pages/admin/services', {
       title: res.__('admin.manage_services'),
@@ -357,7 +358,6 @@ router.get('/services', requireAuth, async (req, res) => {
 // Create service
 router.post('/services', requireAuth, async (req, res) => {
   try {
-    const services = await readJSONFile('services.json');
     const payload = req.body || {};
 
     // Coerce types
@@ -374,13 +374,15 @@ router.post('/services', requireAuth, async (req, res) => {
     // Generate or validate ID
     let id = payload.id || slugify(payload.name.en);
     if (!id) id = 'service-' + Date.now();
+    
+    // Check if ID already exists
     let uniqueId = id;
     let counter = 1;
-    while (services.find(s => s.id === uniqueId)) {
+    while (await Service.findOne({ id: uniqueId })) {
       uniqueId = `${id}-${counter++}`;
     }
 
-    const newService = {
+    const newService = new Service({
       id: uniqueId,
       name: payload.name,
       description: payload.description,
@@ -393,11 +395,9 @@ router.post('/services', requireAuth, async (req, res) => {
       maxQuantity: payload.maxQuantity != null ? payload.maxQuantity : undefined,
       minArea: payload.minArea != null ? payload.minArea : undefined,
       maxArea: payload.maxArea != null ? payload.maxArea : undefined
-    };
+    });
 
-    services.push(newService);
-    const ok = await writeJSONFile('services.json', services);
-    if (!ok) return res.status(500).json({ success: false, errors: ['Failed to persist service'] });
+    await newService.save();
 
     res.json({ success: true, service: newService });
   } catch (error) {
@@ -410,9 +410,8 @@ router.post('/services', requireAuth, async (req, res) => {
 router.put('/services/:id', requireAuth, async (req, res) => {
   try {
     const { id } = req.params;
-    const services = await readJSONFile('services.json');
-    const idx = services.findIndex(s => s.id === id);
-    if (idx === -1) return res.status(404).json({ success: false, errors: ['Service not found'] });
+    const service = await Service.findOne({ id });
+    if (!service) return res.status(404).json({ success: false, errors: ['Service not found'] });
 
     const payload = req.body || {};
     // Coerce types
@@ -423,15 +422,14 @@ router.put('/services/:id', requireAuth, async (req, res) => {
     if (payload.maxArea != null) payload.maxArea = Number(payload.maxArea);
     if (payload.available != null) payload.available = payload.available === true || payload.available === 'true';
 
-    const merged = { ...services[idx], ...payload };
+    const merged = { ...service.toObject(), ...payload };
     const errors = validateServicePayload(merged, true);
     if (errors.length) return res.status(400).json({ success: false, errors });
 
-    services[idx] = merged;
-    const ok = await writeJSONFile('services.json', services);
-    if (!ok) return res.status(500).json({ success: false, errors: ['Failed to persist service'] });
+    Object.assign(service, payload);
+    await service.save();
 
-    res.json({ success: true, service: merged });
+    res.json({ success: true, service });
   } catch (error) {
     console.error('Update service error:', error);
     res.status(500).json({ success: false, errors: ['Failed to update service'] });
@@ -442,24 +440,19 @@ router.put('/services/:id', requireAuth, async (req, res) => {
 router.delete('/services/:id', requireAuth, async (req, res) => {
   try {
     const { id } = req.params;
-    const services = await readJSONFile('services.json');
-    const idx = services.findIndex(s => s.id === id);
-    if (idx === -1) return res.status(404).json({ success: false, errors: ['Service not found'] });
+    const service = await Service.findOne({ id });
+    if (!service) return res.status(404).json({ success: false, errors: ['Service not found'] });
 
-    services.splice(idx, 1);
-    const ok1 = await writeJSONFile('services.json', services);
-    if (!ok1) return res.status(500).json({ success: false, errors: ['Failed to remove service'] });
+    await Service.deleteOne({ id });
 
     // Clean up packages that reference this service
-    const packages = await readJSONFile('packages.json');
+    const packages = await Package.find({ services: id });
     let changed = false;
-    packages.forEach(p => {
-      if (Array.isArray(p.services) && p.services.includes(id)) {
-        p.services = p.services.filter(sid => sid !== id);
-        changed = true;
-      }
-    });
-    if (changed) await writeJSONFile('packages.json', packages);
+    for (const pkg of packages) {
+      pkg.services = pkg.services.filter(sid => sid !== id);
+      await pkg.save();
+      changed = true;
+    }
 
     res.json({ success: true, removedFromPackages: changed });
   } catch (error) {

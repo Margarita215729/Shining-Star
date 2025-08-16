@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const fs = require('fs').promises;
+const { Service, Package, Portfolio } = require('../utils/database');
 
 // Helper function to read JSON data
 async function readJSONFile(filePath) {
@@ -28,13 +29,13 @@ router.get('/lang/:lang', (req, res) => {
 // Home page
 router.get('/', async (req, res) => {
   try {
-    const services = await readJSONFile('services.json');
-    const packages = await readJSONFile('packages.json');
+    const services = await Service.find({ available: true }).limit(4);
+    const packages = await Package.find({ available: true });
 
     res.render('pages/home', {
       title: res.__('home.title'),
       currentPage: 'home',
-      services: services.slice(0, 4), // Show only first 4 services on home
+      services: services, // Show only first 4 services on home
       packages: packages
     });
   } catch (error) {
@@ -50,8 +51,8 @@ router.get('/', async (req, res) => {
 // Services page
 router.get('/services', async (req, res) => {
   try {
-    const services = await readJSONFile('services.json');
-    const packages = await readJSONFile('packages.json');
+    const services = await Service.find({ available: true });
+    const packages = await Package.find({ available: true });
 
     res.render('pages/services', {
       title: res.__('services.title'),
@@ -72,7 +73,7 @@ router.get('/services', async (req, res) => {
 // Portfolio page
 router.get('/portfolio', async (req, res) => {
   try {
-    const portfolio = await readJSONFile('portfolio.json');
+    const portfolio = await Portfolio.find().sort({ date: -1 });
 
     res.render('pages/portfolio', {
       title: res.__('portfolio.title'),
@@ -92,7 +93,7 @@ router.get('/portfolio', async (req, res) => {
 // Calculator page
 router.get('/calculator', async (req, res) => {
   try {
-    const services = await readJSONFile('services.json');
+    const services = await Service.find({ available: true });
 
     res.render('calculator', {
       title: res.__('calculator.title'),

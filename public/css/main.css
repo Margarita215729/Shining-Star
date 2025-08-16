@@ -2493,6 +2493,111 @@ img.loaded {
     font-size: 0.875rem;
 }
 
+/* Section Separator Styles */
+.section-separator {
+    padding: 3rem 0;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.separator-line {
+    position: relative;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, #cbd5e1 20%, #94a3b8 50%, #cbd5e1 80%, transparent 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.separator-icon {
+    background: white;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: #3b82f6;
+    font-size: 1.25rem;
+}
+
+/* Liquid Glass Effect for Icons */
+.liquid-glass-icon {
+    position: relative;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.liquid-glass-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 100%);
+    z-index: -1;
+}
+
+.liquid-glass-icon:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced contrast improvements */
+.service-card {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.service-card:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+}
+
+.service-title {
+    color: #1f2937;
+    font-weight: 700;
+    margin: 1rem 0 0.5rem;
+}
+
+.service-description {
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.service-price {
+    color: #059669;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.service-duration {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
 .notification-close {
     background: none;
     border: none;

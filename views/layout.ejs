@@ -11,6 +11,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/responsive.css">
+    <link rel="stylesheet" href="/css/liquid-glass-icons.css">
     <% if (currentPage==='calculator' ) { %>
         <link rel="stylesheet" href="/css/calculator.css">
         <% } %>
@@ -24,6 +25,9 @@
 </head>
 
 <body>
+    <!-- SVG Icon Sprite -->
+    <%- include('partials/icon-sprite') %>
+    
     <% if (!hideHeaderFooter) { %>
         <%- include('partials/header') %>
             <% } %>

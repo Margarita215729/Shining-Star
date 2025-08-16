@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const i18n = require('i18n');
 const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
+const { connectDB, migrateJSONToMongo } = require('./utils/database');
 
 // Fix for Vercel deployment - Updated config
 const publicPath = path.resolve(__dirname, 'public');
@@ -82,7 +83,7 @@ app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
   // UI flags
   res.locals.hideHeaderFooter = false; // allow pages to hide global chrome
-  res.locals.showCalculatorLink = false; // hide calculator link in header by default
+  res.locals.showCalculatorLink = true; // Show calculator link in header
   next();
 });
 
@@ -106,9 +107,16 @@ app.use((req, res) => {
 });
 
 if (require.main === module) {
-  app.listen(PORT, () => {
+  app.listen(PORT, async () => {
     console.log(`🌟 Shining Star Cleaning Services server running on port ${PORT}`);
     console.log(`🔗 Access the website at: http://localhost:${PORT}`);
+    
+    // Initialize MongoDB connection
+    const dbConnected = await connectDB();
+    if (dbConnected) {
+      // Run migration from JSON to MongoDB
+      await migrateJSONToMongo();
+    }
   });
 }
 
