@@ -80,6 +80,9 @@ app.use((req, res, next) => {
   res.locals.__n = req.__n;
   res.locals.locale = req.getLocale();
   res.locals.user = req.session.user || null;
+  // UI flags
+  res.locals.hideHeaderFooter = false; // allow pages to hide global chrome
+  res.locals.showCalculatorLink = false; // hide calculator link in header by default
   next();
 });
 

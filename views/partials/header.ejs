@@ -20,28 +20,32 @@
                             <%= __('nav.services') %>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/calculator" class="nav-link <%= currentPage === 'calculator' ? 'active' : '' %>">
-                            <%= __('nav.calculator') %>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/portfolio" class="nav-link <%= currentPage === 'portfolio' ? 'active' : '' %>">
-                            <%= __('nav.portfolio') %>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/contact" class="nav-link <%= currentPage === 'contact' ? 'active' : '' %>">
-                            <%= __('nav.contact') %>
-                        </a>
-                    </li>
-                    <% if (user && user.role==='admin' ) { %>
+                    <% if (showCalculatorLink) { %>
                         <li class="nav-item">
-                            <a href="/admin" class="nav-link <%= currentPage.includes('admin') ? 'active' : '' %>">
-                                <%= __('nav.admin') %>
+                            <a href="/calculator" class="nav-link <%= currentPage === 'calculator' ? 'active' : '' %>">
+                                <%= __('nav.calculator') %>
                             </a>
                         </li>
                         <% } %>
+                            <li class="nav-item">
+                                <a href="/portfolio"
+                                    class="nav-link <%= currentPage === 'portfolio' ? 'active' : '' %>">
+                                    <%= __('nav.portfolio') %>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/contact" class="nav-link <%= currentPage === 'contact' ? 'active' : '' %>">
+                                    <%= __('nav.contact') %>
+                                </a>
+                            </li>
+                            <% if (user && user.role==='admin' ) { %>
+                                <li class="nav-item">
+                                    <a href="/admin"
+                                        class="nav-link <%= currentPage.includes('admin') ? 'active' : '' %>">
+                                        <%= __('nav.admin') %>
+                                    </a>
+                                </li>
+                                <% } %>
                 </ul>
             </div>
 

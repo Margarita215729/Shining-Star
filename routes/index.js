@@ -97,7 +97,9 @@ router.get('/calculator', async (req, res) => {
     res.render('calculator', {
       title: res.__('calculator.title'),
       currentPage: 'calculator',
-      services
+      services,
+      showCalculatorLink: true,
+      hideHeaderFooter: true
     });
   } catch (error) {
     console.error('Error loading calculator page:', error);

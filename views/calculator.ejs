@@ -13,6 +13,13 @@
             <%- contentFor('scripts') %>
                 <script src="/js/calculator.js"></script>
 
+                <div class="calc-topbar" style="padding:12px 16px; border-bottom:1px solid #e2e8f0; background:#fff;">
+                    <a href="/" class="back-link" style="text-decoration:none; color:#2d3748; font-weight:600;">
+                        <i class="fas fa-arrow-left" style="margin-right:8px;"></i>
+                        <%= __('nav.home') %>
+                    </a>
+                </div>
+
                 <div class="calculator-container">
                     <div class="calculator-header">
                         <h2>
@@ -171,6 +178,10 @@
 
                 <!-- Custom Styles for Info Section -->
                 <style>
+                    .calc-topbar .back-link:hover {
+                        color: #1a202c;
+                    }
+
                     .calculator-info {
                         margin: 4rem 0;
                         padding: 3rem 0;

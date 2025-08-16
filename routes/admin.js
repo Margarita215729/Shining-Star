@@ -30,6 +30,103 @@ async function writeJSONFile(filePath, data) {
   }
 }
 
+// --- Validation helpers ---
+function slugify(text) {
+  return String(text || '')
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)+/g, '')
+    .substring(0, 80);
+}
+
+function validateServicePayload(payload, forUpdate = false) {
+  const errors = [];
+  const allowedCalculationTypes = ['quantity', 'area', 'time', 'fixed'];
+
+  // Names/descriptions
+  if (!payload.name || typeof payload.name !== 'object' || !payload.name.en) {
+    errors.push('name.en is required');
+  }
+  if (!payload.description || typeof payload.description !== 'object' || !payload.description.en) {
+    errors.push('description.en is required');
+  }
+
+  // Numbers
+  if (payload.price == null || isNaN(Number(payload.price)) || Number(payload.price) < 0) {
+    errors.push('price must be a non-negative number');
+  }
+  if (payload.duration == null || isNaN(Number(payload.duration)) || Number(payload.duration) < 0) {
+    errors.push('duration must be a non-negative number (minutes)');
+  }
+
+  // calculationType-specific
+  if (!payload.calculationType || !allowedCalculationTypes.includes(payload.calculationType)) {
+    errors.push(`calculationType must be one of: ${allowedCalculationTypes.join(', ')}`);
+  } else {
+    if (payload.calculationType === 'quantity') {
+      if (!payload.unit) errors.push('unit is required for quantity type');
+      if (payload.maxQuantity != null && (isNaN(Number(payload.maxQuantity)) || Number(payload.maxQuantity) <= 0)) {
+        errors.push('maxQuantity must be a positive number if provided');
+      }
+    }
+    if (payload.calculationType === 'area') {
+      if (!payload.unit) errors.push('unit is required for area type');
+      if (payload.minArea != null && (isNaN(Number(payload.minArea)) || Number(payload.minArea) < 0)) {
+        errors.push('minArea must be a non-negative number if provided');
+      }
+      if (payload.maxArea != null && (isNaN(Number(payload.maxArea)) || Number(payload.maxArea) <= 0)) {
+        errors.push('maxArea must be a positive number if provided');
+      }
+    }
+    if (payload.calculationType === 'time') {
+      // time-based can rely on duration and perhaps a labor rate client-side
+    }
+  }
+
+  // Booleans/strings
+  if (payload.available != null && typeof payload.available !== 'boolean') {
+    errors.push('available must be boolean');
+  }
+
+  if (payload.category != null && typeof payload.category !== 'string') {
+    errors.push('category must be a string');
+  }
+
+  return errors;
+}
+
+function validatePackagePayload(payload, allServices) {
+  const errors = [];
+  if (!payload.name || typeof payload.name !== 'object' || !payload.name.en) {
+    errors.push('name.en is required');
+  }
+  if (!payload.description || typeof payload.description !== 'object' || !payload.description.en) {
+    errors.push('description.en is required');
+  }
+  if (!Array.isArray(payload.services)) {
+    errors.push('services must be an array of service IDs');
+  } else {
+    const serviceIds = new Set(allServices.map(s => s.id));
+    const unknown = payload.services.filter(id => !serviceIds.has(id));
+    if (unknown.length) errors.push(`Unknown service IDs: ${unknown.join(', ')}`);
+  }
+  if (payload.price == null || isNaN(Number(payload.price)) || Number(payload.price) < 0) {
+    errors.push('price must be a non-negative number');
+  }
+  if (payload.discount == null || isNaN(Number(payload.discount)) || Number(payload.discount) < 0 || Number(payload.discount) > 100) {
+    errors.push('discount must be between 0 and 100');
+  }
+  if (payload.duration == null || isNaN(Number(payload.duration)) || Number(payload.duration) < 0) {
+    errors.push('duration must be a non-negative number (minutes)');
+  }
+  if (payload.available != null && typeof payload.available !== 'boolean') {
+    errors.push('available must be boolean');
+  }
+  return errors;
+}
+
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -62,6 +159,10 @@ function requireAuth(req, res, next) {
   if (req.session.user && req.session.user.role === 'admin') {
     next();
   } else {
+    // remember original URL for redirect after login
+    if (!req.session.returnTo) {
+      req.session.returnTo = req.originalUrl || '/admin';
+    }
     res.redirect('/admin/login');
   }
 }
@@ -74,7 +175,8 @@ router.get('/login', (req, res) => {
 
   res.render('pages/admin/login', {
     title: res.__('admin.login'),
-    currentPage: 'login'
+    currentPage: 'admin-login',
+    hideHeaderFooter: true
   });
 });
 
@@ -130,6 +232,7 @@ router.get('/', requireAuth, async (req, res) => {
     res.render('pages/admin/dashboard', {
       title: res.__('admin.dashboard'),
       currentPage: 'admin-dashboard',
+      hideHeaderFooter: true,
       stats: {
         services: services.length,
         packages: packages.length,
@@ -167,6 +270,7 @@ router.get('/dashboard', requireAuth, async (req, res) => {
     res.render('pages/admin/dashboard', {
       title: res.__('admin.dashboard'),
       currentPage: 'admin-dashboard',
+      hideHeaderFooter: true,
       stats,
       recentActivity: [] // Add recent activity tracking later
     });
@@ -187,7 +291,8 @@ router.get('/portfolio', requireAuth, async (req, res) => {
 
     res.render('pages/admin/portfolio', {
       title: res.__('admin.manage_portfolio'),
-      currentPage: 'portfolio',
+      currentPage: 'admin-portfolio',
+      hideHeaderFooter: true,
       portfolio
     });
   } catch (error) {
@@ -235,7 +340,8 @@ router.get('/services', requireAuth, async (req, res) => {
 
     res.render('pages/admin/services', {
       title: res.__('admin.manage_services'),
-      currentPage: 'services',
+      currentPage: 'admin-services',
+      hideHeaderFooter: true,
       services
     });
   } catch (error) {
@@ -248,6 +354,120 @@ router.get('/services', requireAuth, async (req, res) => {
   }
 });
 
+// Create service
+router.post('/services', requireAuth, async (req, res) => {
+  try {
+    const services = await readJSONFile('services.json');
+    const payload = req.body || {};
+
+    // Coerce types
+    payload.price = Number(payload.price);
+    payload.duration = Number(payload.duration);
+    if (payload.maxQuantity != null) payload.maxQuantity = Number(payload.maxQuantity);
+    if (payload.minArea != null) payload.minArea = Number(payload.minArea);
+    if (payload.maxArea != null) payload.maxArea = Number(payload.maxArea);
+    payload.available = payload.available === true || payload.available === 'true';
+
+    const errors = validateServicePayload(payload);
+    if (errors.length) return res.status(400).json({ success: false, errors });
+
+    // Generate or validate ID
+    let id = payload.id || slugify(payload.name.en);
+    if (!id) id = 'service-' + Date.now();
+    let uniqueId = id;
+    let counter = 1;
+    while (services.find(s => s.id === uniqueId)) {
+      uniqueId = `${id}-${counter++}`;
+    }
+
+    const newService = {
+      id: uniqueId,
+      name: payload.name,
+      description: payload.description,
+      price: payload.price,
+      duration: payload.duration,
+      category: payload.category || 'general',
+      available: payload.available !== false,
+      calculationType: payload.calculationType,
+      unit: payload.unit || null,
+      maxQuantity: payload.maxQuantity != null ? payload.maxQuantity : undefined,
+      minArea: payload.minArea != null ? payload.minArea : undefined,
+      maxArea: payload.maxArea != null ? payload.maxArea : undefined
+    };
+
+    services.push(newService);
+    const ok = await writeJSONFile('services.json', services);
+    if (!ok) return res.status(500).json({ success: false, errors: ['Failed to persist service'] });
+
+    res.json({ success: true, service: newService });
+  } catch (error) {
+    console.error('Create service error:', error);
+    res.status(500).json({ success: false, errors: ['Failed to create service'] });
+  }
+});
+
+// Update service
+router.put('/services/:id', requireAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const services = await readJSONFile('services.json');
+    const idx = services.findIndex(s => s.id === id);
+    if (idx === -1) return res.status(404).json({ success: false, errors: ['Service not found'] });
+
+    const payload = req.body || {};
+    // Coerce types
+    if (payload.price != null) payload.price = Number(payload.price);
+    if (payload.duration != null) payload.duration = Number(payload.duration);
+    if (payload.maxQuantity != null) payload.maxQuantity = Number(payload.maxQuantity);
+    if (payload.minArea != null) payload.minArea = Number(payload.minArea);
+    if (payload.maxArea != null) payload.maxArea = Number(payload.maxArea);
+    if (payload.available != null) payload.available = payload.available === true || payload.available === 'true';
+
+    const merged = { ...services[idx], ...payload };
+    const errors = validateServicePayload(merged, true);
+    if (errors.length) return res.status(400).json({ success: false, errors });
+
+    services[idx] = merged;
+    const ok = await writeJSONFile('services.json', services);
+    if (!ok) return res.status(500).json({ success: false, errors: ['Failed to persist service'] });
+
+    res.json({ success: true, service: merged });
+  } catch (error) {
+    console.error('Update service error:', error);
+    res.status(500).json({ success: false, errors: ['Failed to update service'] });
+  }
+});
+
+// Delete service (and remove references from packages)
+router.delete('/services/:id', requireAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const services = await readJSONFile('services.json');
+    const idx = services.findIndex(s => s.id === id);
+    if (idx === -1) return res.status(404).json({ success: false, errors: ['Service not found'] });
+
+    services.splice(idx, 1);
+    const ok1 = await writeJSONFile('services.json', services);
+    if (!ok1) return res.status(500).json({ success: false, errors: ['Failed to remove service'] });
+
+    // Clean up packages that reference this service
+    const packages = await readJSONFile('packages.json');
+    let changed = false;
+    packages.forEach(p => {
+      if (Array.isArray(p.services) && p.services.includes(id)) {
+        p.services = p.services.filter(sid => sid !== id);
+        changed = true;
+      }
+    });
+    if (changed) await writeJSONFile('packages.json', packages);
+
+    res.json({ success: true, removedFromPackages: changed });
+  } catch (error) {
+    console.error('Delete service error:', error);
+    res.status(500).json({ success: false, errors: ['Failed to delete service'] });
+  }
+});
+
 // Manage packages
 router.get('/packages', requireAuth, async (req, res) => {
   try {
@@ -256,7 +476,8 @@ router.get('/packages', requireAuth, async (req, res) => {
 
     res.render('pages/admin/packages', {
       title: res.__('admin.manage_packages'),
-      currentPage: 'packages',
+      currentPage: 'admin-packages',
+      hideHeaderFooter: true,
       packages,
       services
     });
@@ -267,6 +488,121 @@ router.get('/packages', requireAuth, async (req, res) => {
       currentPage: 'error',
       error: 'Failed to load packages'
     });
+  }
+});
+
+// Create package
+router.post('/packages', requireAuth, async (req, res) => {
+  try {
+    const packages = await readJSONFile('packages.json');
+    const services = await readJSONFile('services.json');
+    const payload = req.body || {};
+
+    // Coerce types
+    if (typeof payload.services === 'string') {
+      // support single select or comma string
+      try {
+        const parsed = JSON.parse(payload.services);
+        payload.services = parsed;
+      } catch {
+        payload.services = payload.services.split(',').map(s => s.trim()).filter(Boolean);
+      }
+    }
+    payload.price = Number(payload.price);
+    payload.discount = Number(payload.discount);
+    payload.duration = Number(payload.duration);
+    payload.available = payload.available === true || payload.available === 'true';
+
+    const errors = validatePackagePayload(payload, services);
+    if (errors.length) return res.status(400).json({ success: false, errors });
+
+    // Generate or validate ID
+    let id = payload.id || slugify(payload.name.en);
+    if (!id) id = 'package-' + Date.now();
+    let uniqueId = id;
+    let counter = 1;
+    while (packages.find(p => p.id === uniqueId)) {
+      uniqueId = `${id}-${counter++}`;
+    }
+
+    const newPackage = {
+      id: uniqueId,
+      name: payload.name,
+      description: payload.description,
+      services: payload.services || [],
+      price: payload.price,
+      discount: payload.discount,
+      duration: payload.duration,
+      available: payload.available !== false
+    };
+
+    packages.push(newPackage);
+    const ok = await writeJSONFile('packages.json', packages);
+    if (!ok) return res.status(500).json({ success: false, errors: ['Failed to persist package'] });
+
+    res.json({ success: true, package: newPackage });
+  } catch (error) {
+    console.error('Create package error:', error);
+    res.status(500).json({ success: false, errors: ['Failed to create package'] });
+  }
+});
+
+// Update package
+router.put('/packages/:id', requireAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const packages = await readJSONFile('packages.json');
+    const services = await readJSONFile('services.json');
+    const idx = packages.findIndex(p => p.id === id);
+    if (idx === -1) return res.status(404).json({ success: false, errors: ['Package not found'] });
+
+    const payload = req.body || {};
+    if (payload.services != null) {
+      if (typeof payload.services === 'string') {
+        try {
+          const parsed = JSON.parse(payload.services);
+          payload.services = parsed;
+        } catch {
+          payload.services = payload.services.split(',').map(s => s.trim()).filter(Boolean);
+        }
+      }
+    }
+    if (payload.price != null) payload.price = Number(payload.price);
+    if (payload.discount != null) payload.discount = Number(payload.discount);
+    if (payload.duration != null) payload.duration = Number(payload.duration);
+    if (payload.available != null) payload.available = payload.available === true || payload.available === 'true';
+
+    const merged = { ...packages[idx], ...payload };
+    const errors = validatePackagePayload(merged, services);
+    if (errors.length) return res.status(400).json({ success: false, errors });
+
+    packages[idx] = merged;
+    const ok = await writeJSONFile('packages.json', packages);
+    if (!ok) return res.status(500).json({ success: false, errors: ['Failed to persist package'] });
+
+    res.json({ success: true, package: merged });
+  } catch (error) {
+    console.error('Update package error:', error);
+    res.status(500).json({ success: false, errors: ['Failed to update package'] });
+  }
+});
+
+// Delete package
+router.delete('/packages/:id', requireAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const packages = await readJSONFile('packages.json');
+    const idx = packages.findIndex(p => p.id === id);
+    if (idx === -1) return res.status(404).json({ success: false, errors: ['Package not found'] });
+
+    packages.splice(idx, 1);
+    const ok = await writeJSONFile('packages.json', packages);
+    if (!ok) return res.status(500).json({ success: false, errors: ['Failed to delete package'] });
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Delete package error:', error);
+    res.status(500).json({ success: false, errors: ['Failed to delete package'] });
   }
 });
 
