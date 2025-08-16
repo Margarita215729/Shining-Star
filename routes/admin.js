@@ -234,8 +234,8 @@ router.get('/', requireAuth, async (req, res) => {
       currentPage: 'admin-dashboard',
       hideHeaderFooter: true,
       stats: {
-        services: services.length,
-        packages: packages.length,
+        services: services.filter(s => s.available !== false).length, // Only count available services
+        packages: packages.filter(p => p.available !== false).length, // Only count available packages
         portfolio: portfolio.length
       }
     });

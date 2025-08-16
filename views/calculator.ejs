@@ -1,34 +1,20 @@
-<%- contentFor('title') %>
-    Pricing Calculator - Shining Star
+<!-- Calculator Page Header -->
+<div class="calc-topbar" style="padding:12px 16px; border-bottom:1px solid #e2e8f0; background:#fff;">
+    <a href="/" class="back-link" style="text-decoration:none; color:#2d3748; font-weight:600;">
+        <i class="fas fa-arrow-left" style="margin-right:8px;"></i>
+        <%= __('nav.home') %>
+    </a>
+</div>
 
-    <%- contentFor('meta') %>
-        <meta name="description"
-            content="Calculate precise pricing for professional cleaning services with our advanced calculator. Get instant quotes for quantity-based, area-based pricing with distance calculations.">
-        <meta name="keywords"
-            content="cleaning calculator, service pricing, professional cleaning quotes, Philadelphia cleaning services">
-
-        <%- contentFor('stylesheets') %>
-            <link rel="stylesheet" href="/css/calculator.css">
-
-            <%- contentFor('scripts') %>
-                <script src="/js/calculator.js"></script>
-
-                <div class="calc-topbar" style="padding:12px 16px; border-bottom:1px solid #e2e8f0; background:#fff;">
-                    <a href="/" class="back-link" style="text-decoration:none; color:#2d3748; font-weight:600;">
-                        <i class="fas fa-arrow-left" style="margin-right:8px;"></i>
-                        <%= __('nav.home') %>
-                    </a>
-                </div>
-
-                <div class="calculator-container">
-                    <div class="calculator-header">
-                        <h2>
-                            <%= __('calculator.title') %>
-                        </h2>
-                        <p>
-                            <%= __('calculator.subtitle') %>
-                        </p>
-                    </div>
+<div class="calculator-container">
+    <div class="calculator-header">
+        <h2>
+            <%= __('calculator.title') %>
+        </h2>
+        <p>
+            <%= __('calculator.subtitle') %>
+        </p>
+    </div>
 
                     <form id="calculator-form" class="calculator-form">
                         <div class="form-grid">
