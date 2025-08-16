@@ -29,13 +29,23 @@ router.get('/lang/:lang', (req, res) => {
 // Home page
 router.get('/', async (req, res) => {
   try {
-    const services = await Service.find({ available: true }).limit(4);
-    const packages = await Package.find({ available: true });
+    let services, packages;
+    
+    // Try MongoDB first, fallback to JSON
+    try {
+      services = await Service.find({ available: true }).limit(4);
+      packages = await Package.find({ available: true });
+    } catch (dbError) {
+      console.log('MongoDB unavailable, falling back to JSON files');
+      services = await readJSONFile('services.json');
+      packages = await readJSONFile('packages.json');
+      services = services.slice(0, 4); // Show only first 4 services on home
+    }
 
     res.render('pages/home', {
       title: res.__('home.title'),
       currentPage: 'home',
-      services: services, // Show only first 4 services on home
+      services: services,
       packages: packages
     });
   } catch (error) {
@@ -51,8 +61,17 @@ router.get('/', async (req, res) => {
 // Services page
 router.get('/services', async (req, res) => {
   try {
-    const services = await Service.find({ available: true });
-    const packages = await Package.find({ available: true });
+    let services, packages;
+    
+    // Try MongoDB first, fallback to JSON
+    try {
+      services = await Service.find({ available: true });
+      packages = await Package.find({ available: true });
+    } catch (dbError) {
+      console.log('MongoDB unavailable, falling back to JSON files');
+      services = await readJSONFile('services.json');
+      packages = await readJSONFile('packages.json');
+    }
 
     res.render('pages/services', {
       title: res.__('services.title'),
@@ -73,7 +92,15 @@ router.get('/services', async (req, res) => {
 // Portfolio page
 router.get('/portfolio', async (req, res) => {
   try {
-    const portfolio = await Portfolio.find().sort({ date: -1 });
+    let portfolio;
+    
+    // Try MongoDB first, fallback to JSON
+    try {
+      portfolio = await Portfolio.find().sort({ date: -1 });
+    } catch (dbError) {
+      console.log('MongoDB unavailable, falling back to JSON files');
+      portfolio = await readJSONFile('portfolio.json');
+    }
 
     res.render('pages/portfolio', {
       title: res.__('portfolio.title'),
@@ -93,7 +120,15 @@ router.get('/portfolio', async (req, res) => {
 // Calculator page
 router.get('/calculator', async (req, res) => {
   try {
-    const services = await Service.find({ available: true });
+    let services;
+    
+    // Try MongoDB first, fallback to JSON
+    try {
+      services = await Service.find({ available: true });
+    } catch (dbError) {
+      console.log('MongoDB unavailable, falling back to JSON files');
+      services = await readJSONFile('services.json');
+    }
 
     res.render('calculator', {
       title: res.__('calculator.title'),

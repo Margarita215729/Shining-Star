@@ -337,7 +337,15 @@ router.post('/portfolio', requireAuth, upload.fields([
 // Manage services
 router.get('/services', requireAuth, async (req, res) => {
   try {
-    const services = await Service.find().sort({ createdAt: -1 });
+    let services;
+    
+    // Try MongoDB first, fallback to JSON
+    try {
+      services = await Service.find().sort({ createdAt: -1 });
+    } catch (dbError) {
+      console.log('MongoDB unavailable for admin, falling back to JSON files');
+      services = await readJSONFile('services.json');
+    }
 
     res.render('pages/admin/services', {
       title: res.__('admin.manage_services'),
@@ -375,31 +383,64 @@ router.post('/services', requireAuth, async (req, res) => {
     let id = payload.id || slugify(payload.name.en);
     if (!id) id = 'service-' + Date.now();
     
-    // Check if ID already exists
-    let uniqueId = id;
-    let counter = 1;
-    while (await Service.findOne({ id: uniqueId })) {
-      uniqueId = `${id}-${counter++}`;
+    // Try MongoDB first, fallback to JSON
+    try {
+      // Check if ID already exists
+      let uniqueId = id;
+      let counter = 1;
+      while (await Service.findOne({ id: uniqueId })) {
+        uniqueId = `${id}-${counter++}`;
+      }
+
+      const newService = new Service({
+        id: uniqueId,
+        name: payload.name,
+        description: payload.description,
+        price: payload.price,
+        duration: payload.duration,
+        category: payload.category || 'general',
+        available: payload.available !== false,
+        calculationType: payload.calculationType,
+        unit: payload.unit || null,
+        maxQuantity: payload.maxQuantity != null ? payload.maxQuantity : undefined,
+        minArea: payload.minArea != null ? payload.minArea : undefined,
+        maxArea: payload.maxArea != null ? payload.maxArea : undefined
+      });
+
+      await newService.save();
+      res.json({ success: true, service: newService });
+    } catch (dbError) {
+      console.log('MongoDB unavailable for service creation, falling back to JSON');
+      
+      // Fallback to JSON file handling
+      const services = await readJSONFile('services.json');
+      let uniqueId = id;
+      let counter = 1;
+      while (services.find(s => s.id === uniqueId)) {
+        uniqueId = `${id}-${counter++}`;
+      }
+
+      const newService = {
+        id: uniqueId,
+        name: payload.name,
+        description: payload.description,
+        price: payload.price,
+        duration: payload.duration,
+        category: payload.category || 'general',
+        available: payload.available !== false,
+        calculationType: payload.calculationType,
+        unit: payload.unit || null,
+        maxQuantity: payload.maxQuantity != null ? payload.maxQuantity : undefined,
+        minArea: payload.minArea != null ? payload.minArea : undefined,
+        maxArea: payload.maxArea != null ? payload.maxArea : undefined
+      };
+
+      services.push(newService);
+      const ok = await writeJSONFile('services.json', services);
+      if (!ok) return res.status(500).json({ success: false, errors: ['Failed to persist service'] });
+
+      res.json({ success: true, service: newService });
     }
-
-    const newService = new Service({
-      id: uniqueId,
-      name: payload.name,
-      description: payload.description,
-      price: payload.price,
-      duration: payload.duration,
-      category: payload.category || 'general',
-      available: payload.available !== false,
-      calculationType: payload.calculationType,
-      unit: payload.unit || null,
-      maxQuantity: payload.maxQuantity != null ? payload.maxQuantity : undefined,
-      minArea: payload.minArea != null ? payload.minArea : undefined,
-      maxArea: payload.maxArea != null ? payload.maxArea : undefined
-    });
-
-    await newService.save();
-
-    res.json({ success: true, service: newService });
   } catch (error) {
     console.error('Create service error:', error);
     res.status(500).json({ success: false, errors: ['Failed to create service'] });
