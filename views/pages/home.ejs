@@ -27,7 +27,11 @@
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-user-check"></i>
+                    <div class="liquid-glass-icon blue floating">
+                        <div class="icon-content">
+                            <svg><use href="#icon-check"></use></svg>
+                        </div>
+                    </div>
                 </div>
                 <h3 class="feature-title"><%= __('home.feature_1') %></h3>
                 <p class="feature-description">
@@ -36,7 +40,11 @@
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-leaf"></i>
+                    <div class="liquid-glass-icon green floating">
+                        <div class="icon-content">
+                            <svg><use href="#icon-eco"></use></svg>
+                        </div>
+                    </div>
                 </div>
                 <h3 class="feature-title"><%= __('home.feature_2') %></h3>
                 <p class="feature-description">
@@ -45,7 +53,11 @@
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-cogs"></i>
+                    <div class="liquid-glass-icon purple floating">
+                        <div class="icon-content">
+                            <svg><use href="#icon-gear"></use></svg>
+                        </div>
+                    </div>
                 </div>
                 <h3 class="feature-title"><%= __('home.feature_3') %></h3>
                 <p class="feature-description">
@@ -54,7 +66,11 @@
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-dollar-sign"></i>
+                    <div class="liquid-glass-icon orange floating">
+                        <div class="icon-content">
+                            <svg><use href="#icon-dollar"></use></svg>
+                        </div>
+                    </div>
                 </div>
                 <h3 class="feature-title"><%= __('home.feature_4') %></h3>
                 <p class="feature-description">
@@ -74,15 +90,35 @@
             <div class="service-card">
                 <div class="service-icon">
                     <% if (service.id === 'refrigerator') { %>
-                        <i class="fas fa-snowflake"></i>
+                        <div class="liquid-glass-icon blue ripple">
+                            <div class="icon-content">
+                                <svg><use href="#icon-refrigerator"></use></svg>
+                            </div>
+                        </div>
                     <% } else if (service.id === 'windows') { %>
-                        <i class="fas fa-window-maximize"></i>
+                        <div class="liquid-glass-icon teal ripple">
+                            <div class="icon-content">
+                                <svg><use href="#icon-window"></use></svg>
+                            </div>
+                        </div>
                     <% } else if (service.id === 'bathroom') { %>
-                        <i class="fas fa-bath"></i>
+                        <div class="liquid-glass-icon purple ripple">
+                            <div class="icon-content">
+                                <svg><use href="#icon-bathroom"></use></svg>
+                            </div>
+                        </div>
                     <% } else if (service.id === 'mirrors') { %>
-                        <i class="fas fa-mirror"></i>
+                        <div class="liquid-glass-icon orange ripple">
+                            <div class="icon-content">
+                                <svg><use href="#icon-mirror"></use></svg>
+                            </div>
+                        </div>
                     <% } else { %>
-                        <i class="fas fa-broom"></i>
+                        <div class="liquid-glass-icon green ripple">
+                            <div class="icon-content">
+                                <svg><use href="#icon-broom"></use></svg>
+                            </div>
+                        </div>
                     <% } %>
                 </div>
                 <h3 class="service-title"><%= service.name[locale] %></h3>
@@ -99,6 +135,21 @@
         </div>
     </div>
 </section>
+
+<!-- Section Separator -->
+<div class="section-separator">
+    <div class="container">
+        <div class="separator-line">
+            <div class="separator-icon">
+                <div class="liquid-glass-icon small blue">
+                    <div class="icon-content">
+                        <svg><use href="#icon-star"></use></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Packages Section -->
 <section class="packages-preview">
